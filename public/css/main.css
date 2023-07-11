@@ -1,0 +1,28 @@
+nav {
+    box-shadow: 5px 5px 5px #eee !important;
+  }
+
+.top-content {
+    background: url(../imgs/img_bookclub.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .person {
+    height: 4.6875rem;
+    margin-top: -3.09375rem;
+    width: 4.6875rem;
+  }
+  
+  .card .top-content a{
+    text-decoration: none;
+  }
+  
+  .card .top-content a:hover{
+     text-decoration: underline;
+  }
+
+  .header{
+    background: url(../imgs/img_bookclub.jpg);
+  }
