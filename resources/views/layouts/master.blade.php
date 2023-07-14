@@ -23,7 +23,7 @@
                             </svg></a>
                     </li>
                     <li class="nav-item mt-2">
-                        <a class="navbar-brand text-secondary" href="#">
+                        <a class="navbar-brand text-secondary" href="{{route('classrooms.index')}}">
                             <img src="{{asset('imgs/googlelogo_clr_74x24px.svg')}}" alt="Logo" class="d-inline-block align-text-center">
                             Classroom</a>
                     </li>

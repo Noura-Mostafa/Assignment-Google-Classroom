@@ -4,36 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use App\Models\Topic;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View as BaseView;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Support\Renderable;
-use PhpParser\Node\Stmt\Class_;
 
 class TopicsController extends Controller
 {
     //Actions
     public function index(): Renderable
     {
-        $topics = Topic::get();
+        $topic = Topic::all();
 
-        return view('topic.index', compact('topics'));
+        return view('topic.index', compact('topic'));
     }
 
-    public function create(Request $request)
+    public function create()
     {
         $classroom = Classroom::all();
 
         return view()->make('topic.create', [
-            'name' => 'Topic'
-        ] , compact('classroom'));
+            'name' => 'Topic',
+            'classroom' => $classroom
+        ]);
     }
 
-    public function store(Request $request):RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
+        
         $classroom = Classroom::all();
         
         $topic = new Topic();
@@ -43,22 +43,17 @@ class TopicsController extends Controller
 
         $topic->save();//insert
 
-        return redirect()->route('topics.index');
-
+        return redirect()->route('topics.index' , compact('classroom'));
     }
 
 
-    public function show(int $id): BaseView
+    public function show(int $id , $classroom): BaseView
     {
         $classroom = Classroom::all();
 
         $topic = Topic::findOrFail($id);
 
-        return View::make('topic.show' , compact('classroom'))
-            ->with([
-                'id' => $id,
-                'topic' => $topic,
-            ]);
+        return View::make('topic.show', compact('classroom', 'id', 'topic'));
     }
 
     public function edit(int $id)
@@ -70,10 +65,7 @@ class TopicsController extends Controller
 
         $classroom = Classroom::all();
 
-        return view()->make('topic.edit', compact('topic' , 'classroom'))->with([
-                'id' => $id,
-                'topic' => $topic,
-            ]);
+        return view()->make('topic.edit', compact('topic', 'classroom', 'id'));
     }
 
 
@@ -86,9 +78,6 @@ class TopicsController extends Controller
         $topic->classroom_id = $request->input('classroom_id');
         $topic->user_id = $request->input('user_id');
         $topic->save();
-
-        //Mass assignment
-        $topic->update($request->all());
 
         return Redirect::route('topics.index');
     }

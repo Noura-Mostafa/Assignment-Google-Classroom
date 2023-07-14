@@ -5,7 +5,7 @@
 <div class="container p-5">
   <h1>Topics</h1>
   <div class="row">
-    @foreach($topics as $topic)
+    @foreach($topic as $topic)
     <div class="col-lg-4 col-md-3">
       <div class="card" style="width: 18rem;">
         {{--<img src="..." class="card-img-top" alt="...">--}}

@@ -14,11 +14,11 @@
       <div class="border rounded p-3 text-center">
         <span class="text-success fs-2">{{$classroom->code}}</span>
       </div>
-      <a href="{{ route('topics.create' , $classroom->id) }}" class="btn btn-success mt-2">Create Topic</a>
+      <a href="{{ route('topics.create') }}" class="btn btn-success mt-2">Create Topic</a>
       <div class="border rounded p-3 mt-4">
       <h3>Class Topics</h3>
       @foreach ($topic as $topic)
-      <h4 class="text-success">{{'- ' . $topic->name}}</h4>
+      <h4 class="text-success">{{'- ' .  $topic->name}}</h4>
       @endforeach
       </div>
     </div>
