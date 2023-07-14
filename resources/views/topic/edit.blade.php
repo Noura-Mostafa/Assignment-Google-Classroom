@@ -1,4 +1,7 @@
-@include('partials.header')
+@extends('layouts.master')
+
+@section('title' , 'edit')
+@section('content')
 
 <div class="container p-5">
     <h1>Edit Topic</h1>
@@ -35,4 +38,4 @@
     </form>
 </div>
 
-@include('partials.footer')
+@endsection

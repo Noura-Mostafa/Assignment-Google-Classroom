@@ -1,5 +1,7 @@
-@include('partials.header')
+@extends('layouts.master')
 
+@section('title' , 'Show')
+@section('content')
 <div class="container p-5">
   <div class="row">
     <div class="col-md-3">
@@ -13,4 +15,4 @@
   </div>
 </div>
 
-@include('partials.footer')
+@endsection

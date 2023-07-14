@@ -1,14 +1,17 @@
-@include('partials.header')
+@extends('layouts.master')
 
-    <div class="container p-5">
-        <h1>Create Classroom</h1>
-        <form action="{{ route('classrooms.store') }}" method="post">
-            {{--
+@section('title' , 'create')
+@section('content')
+
+<div class="container p-5">
+    <h1>Create Classroom</h1>
+    <form action="{{ route('classrooms.store') }}" method="post" enctype="multipart/form-data">
+        {{--
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                {{ csrf_field() }}
-            --}}
-           
-            @csrf
+        {{ csrf_field() }}
+        --}}
+
+        @csrf
 
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="name" placeholder="class name" name="name">
@@ -33,7 +36,7 @@
         <div class="form-floating mb-3">
             <button type="submit" class="btn btn-success">Create Classroom</button>
         </div>
-        </form>
-    </div>
+    </form>
+</div>
 
-@include('partials.footer')
+@endsection

@@ -1,4 +1,7 @@
-@include('partials.header')
+@extends('layouts.master')
+
+@section('title' , 'create')
+@section('content')
 
 <div class="container p-5">
     <h1>Create Topic</h1>
@@ -27,4 +30,4 @@
     </form>
 </div>
 
-@include('partials.footer')
+@endsection
