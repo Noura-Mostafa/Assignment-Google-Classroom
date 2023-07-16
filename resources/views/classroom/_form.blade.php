@@ -34,9 +34,9 @@
     @if($classroom->cover_image_path)
     <img src="{{ asset('uploads/' . $classroom->cover_image_path) }}" class="card-img-top" alt="...">
     @endif
-    <input type="file" value="{{old('cover_image' , $classroom->cover_image)}}" class="form-control" name="cover_image" id="cover_image" @class(['form-control' , 'is-invalid'=> $errors->has('cover_image')])>
+    <input type="file" value="{{old('cover_image' , $classroom->cover_image)}}" name="cover_image" id="cover_image" @class(['form-control' , 'is-invalid'=> $errors->has('cover_image')])>
     <label for="cover_image">Cover Image</label>
-    @error('cover_img')
+    @error('cover_image')
     <div class="invalid-feedback">{{$message}}</div>
     @endError
 </div>
