@@ -22,7 +22,7 @@ class ClassroomRequest extends FormRequest
         return [
                 'name' =>'required|min:3|max:255|string', function($attributes , $value , $fail){
                   if ($value == 'admin') {
-                    return $fail('this :attribute value is forbbiden');
+                    return $fail('this :attributes value is forbbiden');
                   }
                 },
                 'section' =>'nullable|string|max:255',

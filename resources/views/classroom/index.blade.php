@@ -5,6 +5,12 @@
 
 <div class="class-container p-5 min-vw-100 h-100">
   <div class="container">
+  @if($success) {{-- session()-has('success') --}}
+  <div class="alert alert-success w-75">
+    {{ $success }} {{-- session('success') --}}
+  </div>
+  @endif
+
     <div class="row">
       @foreach($classrooms as $classroom)
       <div class="col-lg-3 col-md-6">

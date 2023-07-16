@@ -37,10 +37,6 @@ class ClassroomController extends Controller
     public function store(ClassroomRequest $request): RedirectResponse
     {
 
-        $request->merge([
-            'code' => Str::random(8),
-        ]);
-
         $validated = $request->validated();
         if ($request->hasFile('cover_image')) {
             $file = $request->file('cover_image');  //$request->cover_image //return obj uploadedFile
@@ -49,11 +45,12 @@ class ClassroomController extends Controller
                 'cover_image_path' => $path,
             ]);
         }
+
         $validated['code'] = Str::random(8);
         $classroom = Classroom::create($validated);
 
         //PRG post redirect get
-        return redirect()->route('classrooms.index')->with('success', 'Classroom created');
+        return redirect()->route('classrooms.index' , compact('classroom'))->with('success', 'Classroom created');
     }
 
 
