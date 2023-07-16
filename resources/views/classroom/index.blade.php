@@ -35,9 +35,3 @@
 </div>
 
 @endsection
-
-@pushIf('true' ,'scripts')
-<script>
-  console.log('@@stack')
-</script>
-@endpushIf

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classroom;
 use App\Models\Topic;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
+use App\Http\Requests\TopicRequest;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View as BaseView;
@@ -31,23 +32,25 @@ class TopicsController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(TopicRequest $request): RedirectResponse
     {
         
         $classroom = Classroom::all();
+
+        $validated = $request->validated();
         
         $topic = new Topic();
         $topic->name = $request->post('name');
         $topic->classroom_id = $request->input('classroom_id');
         $topic->user_id = $request->input('user_id');
 
-        $topic->save();//insert
+        $topic->save($validated);//insert
 
         return redirect()->route('topics.index' , compact('classroom'));
     }
 
 
-    public function show(int $id , $classroom): BaseView
+    public function show(int $id): BaseView
     {
         $classroom = Classroom::all();
 
@@ -70,14 +73,15 @@ class TopicsController extends Controller
 
 
 
-    public function update(Request $request, $id)
+    public function update(TopicRequest $request, $id)
     {
         $topic = Topic::findOrFail($id);
+        $validated = $request->validated();
 
         $topic->name = $request->post('name');
         $topic->classroom_id = $request->input('classroom_id');
         $topic->user_id = $request->input('user_id');
-        $topic->save();
+        $topic->save($validated);
 
         return Redirect::route('topics.index');
     }

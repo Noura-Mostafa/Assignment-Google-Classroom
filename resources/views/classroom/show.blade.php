@@ -17,7 +17,7 @@
       <a href="{{ route('topics.create') }}" class="btn btn-success mt-2">Create Topic</a>
       <div class="border rounded p-3 mt-4">
       <h3>Class Topics</h3>
-      @foreach ($topic as $topic)
+      @foreach ($topics as $topic)
       <h4 class="text-success">{{'- ' .  $topic->name}}</h4>
       @endforeach
       </div>
