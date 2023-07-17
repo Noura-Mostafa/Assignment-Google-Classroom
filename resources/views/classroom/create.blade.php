@@ -6,15 +6,7 @@
 <div class="container p-5">
     <h1>Create Classroom</h1>
 
-    @if($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+    <x-errorbox />
 
     <form action="{{ route('classrooms.store') }}" method="post" enctype="multipart/form-data">
         @csrf

@@ -1,43 +1,19 @@
-@extends('layouts.master')
-
-@section('title' , 'Classrooms')
-@section('content')
+<x-main-layout title="Classrooms">
 
 <div class="class-container p-5 min-vw-100 h-100">
   <div class="container">
-  @if($success) {{-- session()-has('success') --}}
-  <div class="alert alert-success w-75">
-    {{ $success }} {{-- session('success') --}}
-  </div>
-  @endif
+
+  <x-alert name="success" id="success" />
+  <x-alert name="error" id="error" />
 
     <div class="row">
       @foreach($classrooms as $classroom)
       <div class="col-lg-3 col-md-6">
-        <div class="card position-relative" style="width: 18rem; height: 18rem;">
-          <img src="{{asset('uploads/' . $classroom->cover_image_path)}}" class="card-img-top" alt="...">
-          <div class="top-content h-50 p-3 pt-4">
-            <a href="#" class="d-block text-black  fs-4">{{ $classroom->name }}</a>
-            <a href="#" class="d-block text-black  fs-5">{{ $classroom->section }}</a>
-            <a href="#" class="d-block text-black  fs-6">{{ $classroom->room }}</a>
-          </div>
-          {{--<img class="person position-absolute top-50 end-0 rounded-circle me-2" src="imgs/pexels-daniel-xavier-1239291.jpg" alt="">--}}
-          <div class="card-body p-3 h-50">
-            <div class="actions d-flex justify-content-between p-2">
-              <a href="{{ route('classrooms.show' , $classroom->id) }}" class="btn btn-success">Show</a>
-              <a href="{{ route('classrooms.edit' , $classroom->id) }}" class="btn btn-secondary">Edit</a>
-              <form action="{{ route('classrooms.destroy' , $classroom->id) }}" method="post">
-                @csrf
-                @method('delete')
-                <button type="submit" class="btn btn-warning">Delete</button>
-              </form>
-            </div>
-          </div>
-        </div>
+      <x-classroomCard name="{{$classroom->name}}" section="{{$classroom->section}}" room="{{$classroom->room}}" show="{{route('classrooms.show' , $classroom->id)}}" edit="{{route('classrooms.edit' , $classroom->id)}}" delete="{{route('classrooms.destroy' , $classroom->id)}}" cover="{{$classroom->cover_image_path}}" />
       </div>
       @endforeach
     </div>
   </div>
 </div>
 
-@endsection
+</x-main-layout>
