@@ -15,7 +15,7 @@
 
     <header>
         <nav class="navbar navbar-expand-md bg-body-tertiary">
-            <div class="container-fluid">
+            <div class="container">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link text-secondary fs-5" href="#" onclick="openNav()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
