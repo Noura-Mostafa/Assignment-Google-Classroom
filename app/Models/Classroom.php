@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Classroom extends Model
 {
     use HasFactory;
+    
     public static string $disk = 'uploads';
 
     protected $fillable =[

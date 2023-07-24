@@ -26,3 +26,7 @@ nav {
   /* .header{
     background: url(../imgs/img_bookclub.jpg);
   } */
+
+  body{
+    overflow-x: hidden;
+  }

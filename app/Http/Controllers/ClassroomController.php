@@ -41,9 +41,7 @@ class ClassroomController extends Controller
         if ($request->hasFile('cover_image')) {
             $file = $request->file('cover_image');  //$request->cover_image //return obj uploadedFile
             $path = Classroom::uploadCoverImage($file);
-            $request->merge([
-                'cover_image_path' => $path,
-            ]);
+            $validated['cover_image_path'] = $path ;
         }
 
         $validated['code'] = Str::random(8);

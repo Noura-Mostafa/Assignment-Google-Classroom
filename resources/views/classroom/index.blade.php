@@ -1,6 +1,6 @@
 <x-main-layout title="Classrooms">
 
-<div class="class-container p-5 min-vw-100 h-100">
+<div class="class-container p-5 vw-100 vh-100">
   <div class="container">
     <h1 class="mb-4">My Classrooms</h1>
 
