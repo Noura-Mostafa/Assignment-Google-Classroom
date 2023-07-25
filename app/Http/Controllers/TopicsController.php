@@ -14,7 +14,6 @@ use Illuminate\Contracts\Support\Renderable;
 
 class TopicsController extends Controller
 {
-    //Actions
     public function index(): Renderable
     {
         $topic = Topic::all();
@@ -22,74 +21,63 @@ class TopicsController extends Controller
         return view('topic.index', compact('topic'));
     }
 
-    public function create()
+    public function create(Classroom $classroom)
     {
-        $classroom = Classroom::all();
-
         return view()->make('topic.create', [
-            'name' => 'Topic',
-            'classroom' => $classroom
+            'topic' => new Topic(),
+            'classroom' => $classroom,
         ]);
     }
 
-    public function store(TopicRequest $request): RedirectResponse
+    public function store(TopicRequest $request, Classroom $classroom): RedirectResponse
     {
-        
-        $classroom = Classroom::all();
 
         $validated = $request->validated();
-        
-        $topic = new Topic();
-        $topic->name = $request->post('name');
-        $topic->classroom_id = $request->input('classroom_id');
-        $topic->user_id = $request->input('user_id');
 
-        $topic->save($validated);//insert
+        $validated['classroom_id'] = $classroom->id;
 
-        return redirect()->route('topics.index' , compact('classroom'));
+        $topic = Topic::create($validated);
+
+        return redirect()->route('topics.show',compact('topic'));
     }
 
 
-    public function show(int $id): BaseView
+    public function show(int $id , Classroom $classroom): BaseView
     {
-        $classroom = Classroom::all();
-
         $topic = Topic::findOrFail($id);
 
-        return View::make('topic.show', compact('classroom', 'id', 'topic'));
+        return View::make('topic.show', compact('classroom', 'topic'));
     }
 
-    public function edit(int $id)
+    public function edit(int $id , Classroom $classroom)
     {
         $topic = Topic::find($id);
         if (!$topic) {
             abort(404);
         }
 
-        $classroom = Classroom::all();
-
-        return view()->make('topic.edit', compact('topic', 'classroom', 'id'));
+        return view()->make('topic.edit', compact('topic', 'classroom'));
     }
 
 
 
-    public function update(TopicRequest $request, $id)
+    public function update(TopicRequest $request, $id , Classroom $classroom)
     {
         $topic = Topic::findOrFail($id);
+
         $validated = $request->validated();
 
-        $topic->name = $request->post('name');
-        $topic->classroom_id = $request->input('classroom_id');
-        $topic->user_id = $request->input('user_id');
-        $topic->save($validated);
+        $validated['classroom_id'] = $classroom->id;
 
-        return Redirect::route('topics.index');
+        $topic->update($validated);
+
+        return redirect()->route('topics.index',compact('topic' , 'classroom'));
     }
 
     public function destroy($id)
     {
         $topic = Topic::findOrFail($id);
         $topic->delete();
-        return Redirect::route('topics.index');
+        return Redirect::back();
     }
 }

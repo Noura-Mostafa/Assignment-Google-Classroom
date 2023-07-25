@@ -31,22 +31,22 @@ Route::delete('/classrooms/{id}', [ClassroomController::class, 'destroy'])
 
 
 //topic route
-// Route::get('/topics', [TopicsController::class, 'index'])
-//        ->name('topics.index');
-// Route::get('/topics/create', [TopicsController::class, 'create'])
-//        ->name('topics.create');
-// Route::get('/topics/{id}', [TopicsController::class, 'show'])
-//        ->name('topics.show')
-//        ->where('id', '\d+');
-// Route::get('/topics/edit/{id}', [TopicsController::class, 'edit'])
-//        ->name('topics.edit')->where('id', '\d+');
-// Route::post('/topics' , [TopicsController::class , 'store'])
-//        ->name('topics.store');
+Route::get('/topics', [TopicsController::class, 'index'])
+       ->name('topics.index');
+Route::get('/topics/create/{classroom}', [TopicsController::class, 'create'])
+       ->name('topics.create');
+Route::get('/topics/{id}', [TopicsController::class, 'show'])
+       ->name('topics.show')
+       ->where('id', '\d+');
+Route::get('/topics/edit/{id}', [TopicsController::class, 'edit'])
+       ->name('topics.edit')->where('id', '\d+');
+Route::post('/topics/{classroom}' , [TopicsController::class , 'store'])
+       ->name('topics.store');
 
-// Route::put('/topics/{id}', [TopicsController::class, 'update'])
-// ->name('topics.update')->where('id', '\d+');
+Route::put('/topics/{id}', [TopicsController::class, 'update'])
+->name('topics.update')->where('id', '\d+');
 
-// Route::delete('/topics/{id}', [TopicsController::class, 'destroy'])
-// ->name('topics.destroy')->where('id', '\d+');
+Route::delete('/topics/{id}', [TopicsController::class, 'destroy'])
+->name('topics.destroy')->where('id', '\d+');
 
-Route::resource('/topics' , TopicsController::class);
+// Route::resource('/topics' , TopicsController::class);

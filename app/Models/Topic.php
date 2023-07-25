@@ -9,23 +9,25 @@ class Topic extends Model
 {
     use HasFactory;
 
-    // const CREATED_AT ='created_at';
+    const CREATED_AT ='created_at';
 
-    // const UPDATED_AT ='updated_at';
+    const UPDATED_AT ='updated_at';
 
-    // protected $connection = 'mysql';
+    protected $connection = 'mysql';
 
-    // protected $table = 'topics';
+    protected $table = 'topics';
 
-    // protected $primaryKey = 'id'; //default
+    protected $primaryKey = 'id'; //default
 
-    // protected $keyType = 'int'; //default
+    protected $keyType = 'int'; //default
 
-    // public $incrementing = true;
+    public $incrementing = true;
 
     public $timestamps = false;
 
     protected $fillable =[
-        'name' 
+        'name' ,
+        'classroom_id',
+        'user_id',
      ];
 }

@@ -41,7 +41,6 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('classrooms.create')}}">Create Class</a></li>
-                                <li><a class="dropdown-item" href="{{route('topics.create')}}">Create Topic</a></li>
                                 <li><a class="dropdown-item" href="#">Join Class</a></li>
                             </ul>
                         </li>

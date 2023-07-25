@@ -7,7 +7,7 @@
   <div class="row">
     @foreach($topic as $topic)
     <div class="col-lg-4 col-md-3">
-      <div class="card" style="width: 18rem;">
+      <div class="card mb-2" style="width: 18rem;">
         {{--<img src="..." class="card-img-top" alt="...">--}}
         <div class="card-body">
           <h5 class="card-title">{{ $topic->name }}</h5>

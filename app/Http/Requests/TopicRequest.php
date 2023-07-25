@@ -20,7 +20,7 @@ class TopicRequest extends FormRequest
     {
         return [
                 'name' =>'required|min:3|max:255|string',
-                'classroom_id' => 'required' 
+                'classroom_id' => 'int|exists:classrooms,id' ,
             ];
     }
 
