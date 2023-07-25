@@ -1,52 +1,31 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TopicsController;
-use App\Http\Controllers\ClassroomController;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+});
 
-//classroom route
-// Route::get('/classrooms', 'App\Http\Controllers\ClassroomController@index');
-Route::get('/classrooms', [ClassroomController::class, 'index'])
-       ->name('classrooms.index');
-Route::get('/classrooms/create', [ClassroomController::class, 'create'])
-       ->name('classrooms.create');
-Route::get('/classrooms/{id}', [ClassroomController::class, 'show'])
-       ->name('classrooms.show')
-       ->where('id', '\d+');
-Route::get('/classrooms/edit/{id}', [ClassroomController::class, 'edit'])
-       ->name('classrooms.edit')->where('id', '\d+');
-Route::post('/classrooms' , [ClassroomController::class , 'store'])
-       ->name('classrooms.store');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::put('/classrooms/{id}', [ClassroomController::class, 'update'])
-->name('classrooms.update')->where('id', '\d+');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-Route::delete('/classrooms/{id}', [ClassroomController::class, 'destroy'])
-->name('classrooms.destroy')->where('id', '\d+');
-
-
-//topic route
-Route::get('/topics', [TopicsController::class, 'index'])
-       ->name('topics.index');
-Route::get('/topics/create/{classroom}', [TopicsController::class, 'create'])
-       ->name('topics.create');
-Route::get('/topics/{id}', [TopicsController::class, 'show'])
-       ->name('topics.show')
-       ->where('id', '\d+');
-Route::get('/topics/edit/{id}', [TopicsController::class, 'edit'])
-       ->name('topics.edit')->where('id', '\d+');
-Route::post('/topics/{classroom}' , [TopicsController::class , 'store'])
-       ->name('topics.store');
-
-Route::put('/topics/{id}', [TopicsController::class, 'update'])
-->name('topics.update')->where('id', '\d+');
-
-Route::delete('/topics/{id}', [TopicsController::class, 'destroy'])
-->name('topics.destroy')->where('id', '\d+');
-
-// Route::resource('/topics' , TopicsController::class);
+require __DIR__.'/auth.php';
