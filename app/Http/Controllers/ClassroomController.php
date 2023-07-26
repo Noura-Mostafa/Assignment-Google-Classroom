@@ -82,7 +82,7 @@ class ClassroomController extends Controller
         $classroom = Classroom::findOrFail($id);
         $topics = Topic::where('classroom_id', '=', $id)->get();
 
-        $invitation_link = URL::temporarySignedRoute('classrooms.join' , now()->addHours(3) , [
+        $invitation_link = URL::signedRoute('classrooms.join' , [
             'classroom' => $classroom->id,
             'code' => $classroom->code,
          ]);
