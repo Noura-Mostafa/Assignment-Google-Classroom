@@ -13,6 +13,7 @@ use App\Http\Requests\ClassroomRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Facades\Auth;
 
 class ClassroomController extends Controller
 {
@@ -20,7 +21,11 @@ class ClassroomController extends Controller
     public function index(Request $request): Renderable
     {
         $success = session('success');
-        $classrooms = Classroom::orderBy('created_at', 'DESC')->get();
+        $classrooms = Classroom::active()
+            ->recent()
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
 
         return view('classroom.index', compact('classrooms', 'success'));
     }
@@ -41,14 +46,15 @@ class ClassroomController extends Controller
         if ($request->hasFile('cover_image')) {
             $file = $request->file('cover_image');  //$request->cover_image //return obj uploadedFile
             $path = Classroom::uploadCoverImage($file);
-            $validated['cover_image_path'] = $path ;
+            $validated['cover_image_path'] = $path;
         }
 
         $validated['code'] = Str::random(8);
+        $validated['user_id'] = Auth::id();
         $classroom = Classroom::create($validated);
 
         //PRG post redirect get
-        return redirect()->route('classrooms.index' , compact('classroom'))->with('success', 'Classroom created');
+        return redirect()->route('classrooms.index', compact('classroom'))->with('success', 'Classroom created');
     }
 
 
@@ -108,12 +114,37 @@ class ClassroomController extends Controller
     public function destroy($id)
     {
         $classroom = Classroom::find($id);
+        $classroom->delete();
+
+        return Redirect::route('classrooms.index')->with('success', 'Classroom deleted');
+    }
+
+    public function trashed()
+    {
+        $classrooms = Classroom::onlyTrashed()
+            ->latest('deleted_at')->get();
+
+        return view('classroom.trashed', compact('classrooms'));
+    }
+
+    public function restore($id)
+    {
+        $classroom = Classroom::onlyTrashed()->findOrFail($id);
+        $classroom->restore();
+
+        return Redirect::route('classrooms.index')
+            ->with('success', "Classroom ({$classroom->name}) restored");
+    }
+
+    public function forceDelete($id)
+    {
+        $classroom = Classroom::withTrashed()->findOrFail($id);
+        $classroom->forceDelete();
 
         $path = $classroom->cover_image_path;
         $classroom->deleteCoverImage($path);
 
-        $classroom->delete();
-
-        return Redirect::route('classrooms.index')->with('success', 'Classroom deleted');
+        return Redirect::route('classrooms.index')
+            ->with('success', "Classroom ({$classroom->name}) Deleted");
     }
 }

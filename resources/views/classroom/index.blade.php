@@ -2,7 +2,10 @@
 
 <div class="class-container p-5 vw-100 vh-100">
   <div class="container">
+    <div class="container d-flex justify-content-between">
     <h1 class="mb-4">My Classrooms</h1>
+    <a class="text-secondary text-decoration-none fs-5" href="{{route('classrooms.trashed')}}">Trashed</a>
+    </div>    
 
   <x-alert name="success" id="success" />
   <x-alert name="error" id="error" />

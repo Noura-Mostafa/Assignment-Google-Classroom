@@ -23,7 +23,7 @@
         @endif
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" value="{{old('name')}}" id="name" placeholder="topic name" name="name">
+            <input type="text" class="form-control" value="{{old('name') , $topic->name}}" id="name" placeholder="topic name" name="name">
             <label for="name">Topic Name</label>
         </div>
     

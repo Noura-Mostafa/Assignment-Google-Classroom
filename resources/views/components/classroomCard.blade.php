@@ -4,7 +4,7 @@
 
 ])
 
-<div class="card" style="width: 18rem; height: 18rem;">
+<div class="card mb-4" style="width: 18rem; height: 18rem;">
     <img src="{{ asset('uploads/' . $cover)}}" class="card-img-top h-50"  alt="...">
     <div class="top-content h-50 p-3 pt-3">
         <a href="#" class="d-block text-black fs-4">{{ $name }}</a>

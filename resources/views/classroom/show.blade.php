@@ -28,7 +28,7 @@
       <h6 class="text-success">{{'- ' .  $topic->name}}</h6>
       @endforeach
       </div>
-      <a href="{{ route('topics.create') }}" class="btn btn-success mt-2">Create Topic</a>
+      <a href="{{ route('topics.create' , $classroom->id) }}" class="btn btn-success mt-2">Create Topic</a>
     </div>
     <div class="col-md-9">
       <div class="post border rounded row">

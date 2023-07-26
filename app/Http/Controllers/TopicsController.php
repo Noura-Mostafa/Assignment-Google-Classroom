@@ -6,6 +6,7 @@ use App\Models\Topic;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
 use App\Http\Requests\TopicRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View as BaseView;
@@ -35,21 +36,22 @@ class TopicsController extends Controller
         $validated = $request->validated();
 
         $validated['classroom_id'] = $classroom->id;
+        $validated['user_id'] = Auth::id();
 
         $topic = Topic::create($validated);
 
-        return redirect()->route('topics.show',compact('topic'));
+        return redirect()->route('classrooms.show', $classroom->id);
     }
 
 
-    public function show(int $id , Classroom $classroom): BaseView
+    public function show(int $id, Classroom $classroom): BaseView
     {
         $topic = Topic::findOrFail($id);
 
         return View::make('topic.show', compact('classroom', 'topic'));
     }
 
-    public function edit(int $id , Classroom $classroom)
+    public function edit(int $id, Classroom $classroom)
     {
         $topic = Topic::find($id);
         if (!$topic) {
@@ -61,17 +63,18 @@ class TopicsController extends Controller
 
 
 
-    public function update(TopicRequest $request, $id , Classroom $classroom)
+    public function update(TopicRequest $request, $id, Classroom $classroom)
     {
         $topic = Topic::findOrFail($id);
 
         $validated = $request->validated();
 
         $validated['classroom_id'] = $classroom->id;
-
+        $validated['user_id'] = Auth::id();
+        
         $topic->update($validated);
 
-        return redirect()->route('topics.index',compact('topic' , 'classroom'));
+        return redirect()->route('topics.index', compact('topic', 'classroom'));
     }
 
     public function destroy($id)
@@ -79,5 +82,31 @@ class TopicsController extends Controller
         $topic = Topic::findOrFail($id);
         $topic->delete();
         return Redirect::back();
+    }
+
+    public function trashed()
+    {
+        $topics = Topic::onlyTrashed()
+            ->latest('deleted_at')->get();
+
+        return view('topic.trashed', compact('topics'));
+    }
+
+    public function restore($id)
+    {
+        $topic = Topic::onlyTrashed()->findOrFail($id);
+        $topic->restore();
+
+        return Redirect::route('topics.index')
+            ->with('success', "Topic ({$topic->name}) restored");
+    }
+
+    public function forceDelete($id)
+    {
+        $topic = Topic::withTrashed()->findOrFail($id);
+        $topic->forceDelete();
+
+        return Redirect::route('topics.index')
+            ->with('success', "Topic ({$topic->name}) trashed");
     }
 }
