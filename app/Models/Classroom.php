@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Scopes\UserClassroomScope;
@@ -63,5 +64,18 @@ class Classroom extends Model
      {
          static::addGlobalScope(new UserClassroomScope);
      }
+
+     public function join($user_id, $role = 'student')
+    {
+      return  DB::table('classroom_user')
+            ->insert(
+                [
+                    'classroom_id' => $this->id,
+                    'user_id' => $user_id,
+                    'role' => $role,
+                    'created_at' => now(),
+                ]
+            );
+    }
 
 }

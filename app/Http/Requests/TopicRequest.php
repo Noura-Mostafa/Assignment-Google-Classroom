@@ -27,7 +27,7 @@ class TopicRequest extends FormRequest
     public function messages()
     {
         return [
-            'required'  =>':attributes important',
+            'required'  =>':attributes is important',
             'name.required' => 'the name is requied',
         ];
     }

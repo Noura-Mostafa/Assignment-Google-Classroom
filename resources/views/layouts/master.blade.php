@@ -22,8 +22,8 @@
                                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
                             </svg></a>
                     </li>
-                    <li class="nav-item mt-2">
-                        <a class="navbar-brand text-secondary" href="{{route('classrooms.index')}}">
+                    <li class="nav-item">
+                        <a class="navbar-brand text-secondary fs-4" href="{{route('classrooms.index')}}">
                             <img src="{{asset('imgs/googlelogo_clr_74x24px.svg')}}" alt="Logo" class="d-inline-block align-text-center">
                             Classroom</a>
                     </li>
@@ -49,9 +49,7 @@
                             <a class="nav-link fs-5" href="#">{{ Auth::user()->name }}</a>
                         </li>
                     </ul>
-                    <form class="d-flex ms-1" role="button">
-                        <button class="btn btn-success" type="submit">Sign in</button>
-                    </form>
+                  
                 </div>
             </div>
         </nav>

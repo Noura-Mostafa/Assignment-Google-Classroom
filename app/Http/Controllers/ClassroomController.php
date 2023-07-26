@@ -6,14 +6,17 @@ use App\Models\Topic;
 use App\Models\Classroom;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View as BaseView;
 use App\Http\Requests\ClassroomRequest;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Facades\Auth;
 
 class ClassroomController extends Controller
 {
@@ -51,7 +54,23 @@ class ClassroomController extends Controller
 
         $validated['code'] = Str::random(8);
         $validated['user_id'] = Auth::id();
-        $classroom = Classroom::create($validated);
+
+        DB::beginTransaction();
+
+        try {
+            $classroom = Classroom::create($validated);
+
+            $classroom->join(Auth::id(), 'teacher');
+
+            DB::commit();
+
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return back()
+                ->with('error', $e->getMessage())
+                ->withInput();
+        }
+
 
         //PRG post redirect get
         return redirect()->route('classrooms.index', compact('classroom'))->with('success', 'Classroom created');
@@ -62,11 +81,18 @@ class ClassroomController extends Controller
     {
         $classroom = Classroom::findOrFail($id);
         $topics = Topic::where('classroom_id', '=', $id)->get();
+
+        $invitation_link = URL::temporarySignedRoute('classrooms.join' , now()->addHours(3) , [
+            'classroom' => $classroom->id,
+            'code' => $classroom->code,
+         ]);
+
         return View::make('classroom.show')
             ->with([
                 'id' => $id,
                 'classroom' => $classroom,
                 'topics' => $topics,
+                'invitation_link' => $invitation_link,
             ]);
     }
 

@@ -31,14 +31,18 @@
       <a href="{{ route('topics.create' , $classroom->id) }}" class="btn btn-success mt-2">Create Topic</a>
     </div>
     <div class="col-md-9">
-      <div class="post border rounded row">
+      <div class="border rounded p-3 mb-2">
+      <h5>invitation link :</h5>
+      <a class="text-secondary fs-6" href="{{$invitation_link}}">{{$invitation_link}}</a>
+      </div>
+      <!-- <div class="post border rounded row">
         <div class="col-lg-1 bg-secondary-subtle">
           <img src="{{ asset('imgs/avatar-05.png') }}" alt="" class="rounded-circle text-center h-100 w-100">
         </div>
         <div class="col-lg-11 p-3">
           <a href="" class="text-secondary text-decoration-none text-start">Annonce something to your class</a>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

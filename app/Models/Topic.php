@@ -33,8 +33,8 @@ class Topic extends Model
         'user_id',
     ];
 
-    protected static function booted()
-    {
-        static::addGlobalScope(new UserClassroomScope);
-    }
+    // protected static function booted()
+    // {
+    //     static::addGlobalScope(new UserClassroomScope);
+    // }
 }

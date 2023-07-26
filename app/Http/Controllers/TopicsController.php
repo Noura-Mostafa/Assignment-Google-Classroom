@@ -71,7 +71,7 @@ class TopicsController extends Controller
 
         $validated['classroom_id'] = $classroom->id;
         $validated['user_id'] = Auth::id();
-        
+
         $topic->update($validated);
 
         return redirect()->route('topics.index', compact('topic', 'classroom'));

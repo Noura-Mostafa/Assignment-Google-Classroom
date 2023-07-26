@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\JoinClassroomController;
 
 Route::get('/', function () {
        return view('welcome');
@@ -27,6 +28,12 @@ require __DIR__ . '/auth.php';
 
 Route::middleware(['auth'])->group(function () {
 
+       Route::get('classrooms/{classroom}/join', [JoinClassroomController::class, 'create'])
+              ->middleware('signed')
+              ->name('classrooms.join');
+
+       Route::post('classrooms/{classroom}/join', [JoinClassroomController::class, 'store']);
+
 
        Route::prefix('classrooms/trashed')
               ->as('classrooms.')
@@ -48,7 +55,7 @@ Route::middleware(['auth'])->group(function () {
                      'update' => 'classrooms.update',
                      'destroy' => 'classrooms.destroy',
               ]);
-       
+
 
        Route::prefix('topics/trashed')
               ->as('topics.')

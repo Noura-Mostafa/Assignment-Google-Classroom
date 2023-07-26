@@ -3,8 +3,11 @@
 @section('title' , 'topics')
 @section('content')
 <div class="container p-5">
-  <h1>Topics</h1>
-  <div class="row">
+<div class="container d-flex justify-content-between">
+    <h1 class="mb-4">Topics</h1>
+    <a class="text-secondary text-decoration-none fs-5" href="{{route('topics.trashed')}}">Trashed</a>
+    </div>   
+  <div class="row mt-4">
     @foreach($topic as $topic)
     <div class="col-lg-4 col-md-3">
       <div class="card mb-4" style="width: 18rem;">
