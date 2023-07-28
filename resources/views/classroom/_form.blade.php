@@ -33,7 +33,7 @@
 
 <x-form.floating-control name="cover_image" placeholder="cover Image">
     @if($classroom->cover_image_path)
-    <img src="{{ asset('uploads/' . $classroom->cover_image_path) }}" class="card-img-top" alt="...">
+    <img src="{{ asset('uploads/' . $classroom->cover_image_path) }}" class="card-img-top"  alt="...">
     @endif
     <x-slot:label>
     <label for="cover_image">Cover Image</label>

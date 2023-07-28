@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classroom;
 use Exception;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Scopes\UserClassroomScope;
 
 class JoinClassroomController extends Controller
 {

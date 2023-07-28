@@ -159,7 +159,7 @@ class ClassroomController extends Controller
         $classroom->restore();
 
         return Redirect::route('classrooms.index')
-            ->with('success', "Classroom ({$classroom->name}) restored");
+            ->with('success', "Classroom ({$classroom->name}) has been restored");
     }
 
     public function forceDelete($id)
@@ -171,6 +171,6 @@ class ClassroomController extends Controller
         $classroom->deleteCoverImage($path);
 
         return Redirect::route('classrooms.index')
-            ->with('success', "Classroom ({$classroom->name}) Deleted");
+            ->with('success', "Classroom ({$classroom->name}) has been Deleted");
     }
 }

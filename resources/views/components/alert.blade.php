@@ -8,7 +8,7 @@
     @endphp
 
     @if (session()->has($name))
-    <div class="alert alert-{{ $class }}" {{ $attributes }}>
+    <div class="alert alert-{{ $class }} p-2 h-25" {{ $attributes }}>
         {{ session($name) }}
     </div>
     @endif
