@@ -52,8 +52,8 @@ class ClassroomController extends Controller
             $validated['cover_image_path'] = $path;
         }
 
-        $validated['code'] = Str::random(8);
-        $validated['user_id'] = Auth::id();
+        // $validated['code'] = Str::random(8);
+        // $validated['user_id'] = Auth::id();
 
         DB::beginTransaction();
 
@@ -71,8 +71,6 @@ class ClassroomController extends Controller
                 ->withInput();
         }
 
-
-        //PRG post redirect get
         return redirect()->route('classrooms.index', compact('classroom'))->with('success', 'Classroom created');
     }
 
@@ -142,7 +140,7 @@ class ClassroomController extends Controller
         $classroom = Classroom::find($id);
         $classroom->delete();
 
-        return Redirect::route('classrooms.index')->with('success', 'Classroom deleted');
+        return Redirect::route('classrooms.index')->with('success', 'Classroom has been trashed');
     }
 
     public function trashed()
@@ -158,7 +156,7 @@ class ClassroomController extends Controller
         $classroom = Classroom::onlyTrashed()->findOrFail($id);
         $classroom->restore();
 
-        return Redirect::route('classrooms.index')
+        return Redirect::route('classrooms.trashed')
             ->with('success', "Classroom ({$classroom->name}) has been restored");
     }
 
@@ -167,10 +165,10 @@ class ClassroomController extends Controller
         $classroom = Classroom::withTrashed()->findOrFail($id);
         $classroom->forceDelete();
 
-        $path = $classroom->cover_image_path;
-        $classroom->deleteCoverImage($path);
+        // $path = $classroom->cover_image_path;
+        // $classroom->deleteCoverImage($path);
 
-        return Redirect::route('classrooms.index')
+        return Redirect::route('classrooms.trashed')
             ->with('success', "Classroom ({$classroom->name}) has been Deleted");
     }
 }

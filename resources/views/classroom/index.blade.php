@@ -13,11 +13,41 @@
     <div class="row">
       @foreach($classrooms as $classroom)
       <div class="col-lg-3 col-md-6">
-        <x-classroomCard name="{{$classroom->name}}" section="{{$classroom->section}}" room="{{$classroom->room}}" show="{{route('classrooms.show' , $classroom->id)}}" edit="{{route('classrooms.edit' , $classroom->id)}}" delete="{{route('classrooms.destroy' , $classroom->id)}}" cover="{{$classroom->cover_image_path}}" />
+        <div class="card mb-4" style="width: 19rem;">
+          <img src="{{$classroom->cover_image_url}}" class="card-img-top h-50" height="100" width="21rem" alt="...">
+          <div class="container">
+            <div class="top-content h-50 pt-2">
+              <a href="#" class="d-block text-black fs-4">{{ $classroom->name }}</a>
+              <a href="#" class="d-block text-black fs-6">{{ $classroom->section }} - {{ $classroom->room }}</a>
+            </div>
+            <div class="actions d-flex justify-content-end pb-3 mt-3">
+              <a href="{{ $classroom->url }}" class="btn btn-success btn-sm me-1">Show</a>
+              <a href="{{ route('classrooms.edit' , $classroom->id) }}" class="btn btn-secondary btn-sm me-1">Edit</a>
+              <form action="{{route('classrooms.destroy' , $classroom->id)}}" method="post">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-warning btn-sm">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>      
       </div>
-      @endforeach
+        @endforeach
+
     </div>
-  </div>
   </div>
 
 </x-main-layout>
+
+
+
+
+{{-- <x-classroomCard 
+        name="{{$classroom->name}}"
+section="{{$classroom->section}}"
+room="{{$classroom->room}}"
+show="{{route('classrooms.show' , $classroom->id)}}"
+edit="{{route('classrooms.edit' , $classroom->id)}}"
+delete="{{route('classrooms.destroy' , $classroom->id)}}"
+cover="{{$classroom->cover_image_url}}" />
+</div>--}}
