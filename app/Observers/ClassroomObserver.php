@@ -18,14 +18,14 @@ class ClassroomObserver
     public function deleted(Classroom $classroom): void
     {
         $classroom->status = 'deleted';
-        $classroom->save();
+        $classroom->update();
     }
 
 
     public function restored(Classroom $classroom): void
     {
         $classroom->status = 'active';
-        $classroom->save();
+        $classroom->update();
     }
 
 
