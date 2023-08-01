@@ -12,6 +12,7 @@ use App\Observers\ClassroomObserver;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Classroom extends Model
 {
@@ -66,29 +67,22 @@ class Classroom extends Model
     {
 
         static::observe(ClassroomObserver::class);
-        
-        // static::creating(function (Classroom $classroom) {
-        //     $classroom->code = Str::random(8);
-        //     $classroom->user_id = Auth::id();
-        // });
-
-        // static::forceDeleted(function (Classroom $classroom) {
-        //     static::deleteCoverImage($classroom->cover_image_path);
-        // });
-
-        // static::deleted(function (Classroom $classroom) {
-        //     $classroom->status = 'deleted';
-        //     $classroom->save();
-        // });
-
-        // static::restored(function (Classroom $classroom) {
-        //     $classroom->status = 'active';
-        //     $classroom->save();
-        // });
-
 
         static::addGlobalScope(new UserClassroomScope);
     }
+
+    //Relations
+
+    public function classworks(): HasMany
+    {
+        return $this->hasMany(Classwork::class , 'classroom_id' , 'id');
+    }
+
+    public function topics(): HasMany
+    {
+        return $this->hasMany(Topic::class , 'classroom_id' , 'id');
+    }
+
 
     public function join($user_id, $role = 'student')
     {

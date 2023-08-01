@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Classroom;
+use App\Models\Classwork;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Scopes\UserClassroomScope;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Topic extends Model
@@ -32,6 +36,18 @@ class Topic extends Model
         'classroom_id',
         'user_id',
     ];
+
+
+    public function classworks(): HasMany
+    {
+        return $this->hasMany(Classwork::class , 'topic_id' , 'id');
+    }
+
+    public function classroom(): BelongsTo
+    {
+        return $this->belongsTo(Classroom::class , 'topic_id' , 'id');
+    }
+
 
     // protected static function booted()
     // {
