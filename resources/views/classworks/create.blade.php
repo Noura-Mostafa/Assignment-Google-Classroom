@@ -1,12 +1,17 @@
 <x-main-layout title="Create Classswork">
 
 
-    <div class="container pt-5">
-        <h1>{{ $classroom->name }}</h1>
-        <h3>Create Classworks</h3>
-        <hr>
+    <div class="container pt-5 d-flex flex-column align-items-center">
 
-        <form action="{{ route('classrooms.classworks.store' , [$classroom->id , 'type' => $type]) }}" method="post">
+        <div style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{route('classrooms.show' , $classroom->id)}}" class="text-decoration-none text-dark fs-4">{{ $classroom->name }}</a></li>
+                <li class="breadcrumb-item active fs-4" aria-current="page">Create Classworks</li>
+            </ol>
+        </div>
+        <hr class="text-success">
+
+        <form class="w-75" action="{{ route('classrooms.classworks.store' , [$classroom->id , 'type' => $type]) }}" method="post">
             @csrf
             <x-form.floating-control name="title" placeholder="Classroom Name">
                 <x-slot:label>
@@ -19,7 +24,7 @@
                 <x-slot:label>
                     <label for="description">Description (optional)</label>
                 </x-slot:label>
-                <x-form.textinput name="description" placeholder="Description (optional)" />
+                <x-form.textarea name="description" placeholder="Description (optional)" />
             </x-form.floating-control>
 
             <x-form.floating-control name="topic_id" placeholder="Classroom Name">
@@ -27,18 +32,17 @@
                     <label for="topic_id">Topic (optional)</label>
                 </x-slot:label>
                 <select name="topic_id" id="topic_id" class="form-select">
-                    <option value="" disabled>No option</option>
+                    <option value="">No topic</option>
                     @foreach ($classroom->topics as $topic)
                     <option value="{{ $topic->id }}">{{ $topic->name }}</option>
                     @endforeach
                 </select>
             </x-form.floating-control>
 
-            <button type="submit" class="btn btn-success">Create</button>
+            <button type="submit" class="btn btn-success rounded-pill">Create {{$type}}</button>
 
         </form>
 
     </div>
-
-
+    
 </x-main-layout>

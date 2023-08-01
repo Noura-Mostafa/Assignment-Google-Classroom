@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use App\Models\Classwork;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,7 @@ class ClassworkController extends Controller
         return view('classworks.index' , [
             'classroom' => $classroom,
             'classworks' => $classworks->groupBy('topic_id'),
+            'topics' => Topic::all(),
         ]);
     }
 
@@ -87,13 +89,14 @@ class ClassworkController extends Controller
     
     public function update(Request $request,Classroom $classroom, Classwork $classwork)
     {
-        $request->validate([
+        
+        $validated = $request->validate([
             'title' => ['required' , 'string' , 'max:255'],
             'description' => ['nullable' , 'string'],
             'topic_id' => ['nullable' , 'int' , 'exists:topics,id'],
         ]);
 
-        $classwork = $classroom->classworks()->update($request->all());
+        $classwork->update($validated);
 
         return redirect()->route('classrooms.classworks.index' , $classroom->id)
                ->with('success' , 'Classwork updated!');
@@ -102,8 +105,10 @@ class ClassworkController extends Controller
     
     public function destroy(Classroom $classroom , Classwork $classwork)
     {
-        $classwork = $classroom->classworks()->delete();
 
-        return view('classroom.index');
+        $classwork->delete();
+        
+        return redirect()->route('classrooms.classworks.index' , $classroom->id);
+
     }
 }
