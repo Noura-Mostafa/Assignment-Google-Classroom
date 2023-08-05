@@ -7,6 +7,23 @@
     <title>@yield('title' , config('app.name'))</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css">
+    <script src="https://kit.fontawesome.com/6cb271fdf5.js" crossorigin="anonymous"></script>
+
+    <script>
+            function copyText() {
+                const text = document.getElementById('textToCopy').innerText;
+
+                const tempInput = document.createElement('input');
+                tempInput.type = 'text';
+                tempInput.value = text;
+
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+
+            }
+ </script>
 
 </head>
 @stack('style') {{-- to add js css files --}}
