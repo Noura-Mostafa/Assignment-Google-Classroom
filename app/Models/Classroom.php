@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use Exception;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use App\Observers\ClassroomObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Scopes\UserClassroomScope;
-use App\Observers\ClassroomObserver;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Classroom extends Model
 {
@@ -83,18 +85,38 @@ class Classroom extends Model
         return $this->hasMany(Topic::class , 'classroom_id' , 'id');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withPivot(['role' , 'created_at']);
+    }
+
+    public function teachers()
+    {
+        return $this->users()->wherePivot('role' , 'teacher');
+    }
+
+    public function students()
+    {
+        return $this->users()->wherePivot('role' , 'student');
+    }
+    
 
     public function join($user_id, $role = 'student')
     {
-        return  DB::table('classroom_user')
-            ->insert(
-                [
-                    'classroom_id' => $this->id,
-                    'user_id' => $user_id,
-                    'role' => $role,
-                    'created_at' => now(),
-                ]
-            );
+
+        $exists = $this->users()
+        ->wherePivot('user_id', $user_id)
+        ->exists(); 
+
+        if ($exists) {
+            throw new Exception('User already joined the class');
+        }
+
+        return $this->users()->attach($user_id , [
+            'role'=> $role,
+            'created_at' =>now()
+        ]);
+
     }
 
     //Accessor

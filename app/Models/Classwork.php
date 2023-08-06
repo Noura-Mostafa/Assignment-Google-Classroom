@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Topic;
+use App\Models\ClassworkUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,5 +34,11 @@ class Classwork extends Model
     public function topic(): BelongsTo
     {
         return $this->belongsTo(Topic::class , 'topic_id' , 'id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withPivot(['grade' , 'status' , 'submitted_at' , 'created_at'])
+               ->using(ClassworkUser::class);
     }
 }

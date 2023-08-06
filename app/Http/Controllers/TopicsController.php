@@ -40,7 +40,7 @@ class TopicsController extends Controller
 
         $topic = Topic::create($validated);
 
-        return redirect()->route('classrooms.show', $classroom->id);
+        return redirect()->route('classrooms.classworks.index', $classroom->id);
     }
 
 

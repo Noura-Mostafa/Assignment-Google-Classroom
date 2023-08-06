@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\ClassroomPeopleController;
 use App\Http\Controllers\ClassworkController;
 use App\Http\Controllers\JoinClassroomController;
 
@@ -89,7 +90,12 @@ Route::middleware(['auth'])->group(function () {
        Route::delete('/topics/{id}', [TopicsController::class, 'destroy'])
               ->name('topics.destroy')->where('id', '\d+');
 
-       
-       Route::resource('classrooms.classworks' , ClassworkController::class);
-});
 
+       Route::resource('classrooms.classworks', ClassworkController::class);
+
+       Route::get('classrooms/{classroom}/people', [ClassroomPeopleController::class, 'index'])
+              ->name('classrooms.people');
+
+       Route::delete('classrooms/{classroom}/people', [ClassroomPeopleController::class, 'destroy'])
+              ->name('classrooms.people.destroy');
+});

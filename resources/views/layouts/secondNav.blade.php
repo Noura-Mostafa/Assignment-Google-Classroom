@@ -57,7 +57,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">People</a>
+                            <a class="nav-link" href="{{route('classrooms.people' , $classroom->id)}}">People</a>
                         </li>
 
                         <li class="nav-item">

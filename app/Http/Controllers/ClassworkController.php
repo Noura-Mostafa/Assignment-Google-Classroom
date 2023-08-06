@@ -64,6 +64,8 @@ class ClassworkController extends Controller
 
         $classwork = $classroom->classworks()->create($request->all());
 
+        $classwork->users()->attach( $request->input('students') );
+
         return redirect()->route('classrooms.classworks.index' , $classroom->id)
                ->with('success' , 'Classwork created!');
     }
@@ -78,11 +80,17 @@ class ClassworkController extends Controller
     }
 
     
-    public function edit(Classroom $classroom ,Classwork $classwork)
+    public function edit(Request $request , Classroom $classroom ,Classwork $classwork)
     {
+        $type = $this->getType($request);
+
+        $assigned = $classwork->users()->pluck('id')->toArray();
+
         return view('classworks.edit',[
             'classroom' => $classroom,
             'classwork' => $classwork,
+            'type' => $type,
+            'assigned' =>$assigned
         ]);
     }
 
@@ -97,6 +105,9 @@ class ClassworkController extends Controller
         ]);
 
         $classwork->update($validated);
+
+        $classwork->users()->sync($request->input('students'));
+
 
         return redirect()->route('classrooms.classworks.index' , $classroom->id)
                ->with('success' , 'Classwork updated!');
