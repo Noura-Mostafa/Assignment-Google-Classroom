@@ -78,6 +78,8 @@ class ClassworkController extends Controller
 
     public function show(Classroom $classroom , Classwork $classwork)
     {
+        $classwork->load('comments.user');
+        
         return view('classworks.show',[
             'classroom' => $classroom,
             'classwork' => $classwork,
