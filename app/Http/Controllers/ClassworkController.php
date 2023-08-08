@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Topic;
 use App\Models\Classroom;
 use App\Models\Classwork;
-use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class ClassworkController extends Controller
@@ -62,10 +63,14 @@ class ClassworkController extends Controller
             'published_at' => now(),
         ]);
 
-        $classwork = $classroom->classworks()->create($request->all());
+        DB::transaction(function() use ($classroom , $request) {
+            $classwork = $classroom->classworks()->create($request->all());
+
 
         $classwork->users()->attach( $request->input('students') );
 
+        });
+        
         return redirect()->route('classrooms.classworks.index' , $classroom->id)
                ->with('success' , 'Classwork created!');
     }

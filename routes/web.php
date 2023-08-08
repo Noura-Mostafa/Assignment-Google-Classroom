@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
@@ -33,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
 
        Route::post('comments', [CommentController::class, 'store'])
               ->name('comments.store');
+
+       Route::post('classrooms/{classroom}/posts', [PostController::class, 'store'])
+              ->name('posts.store');
 
        Route::get('classrooms/{classroom}/join', [JoinClassroomController::class, 'create'])
               ->middleware('signed')

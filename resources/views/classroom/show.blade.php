@@ -36,9 +36,34 @@
     </div>
 
     <div class="col-md-9">
-      <div class="border rounded p-3 mb-2">
-      </div>
 
+
+      <form action="{{route('posts.store' , $classroom->id)}}" method="post">
+        @csrf
+        <input type="hidden" name="id" value="{{$classroom->id}}">
+        <input type="hidden" name="type" value="post">
+
+        <div class="mb-3 shadow-sm p-2 d-flex align-items-center">
+          <img src="https://ui-avatars.com/api/?name={{Auth::user()?->name}}&size=35" class="rounded-circle me-2" alt="">
+          <input type="text" name="content" placeholder="Tell us something .." class="rounded-pill border border-none w-100 p-3 me-2">
+          <button type="submit" class="btn btn-sm btn-success"><i class="far fa-paper-plane"></i></button>
+        </div>
+
+      </form>
+
+      <div class="posts shadow-sm p-3">
+        @foreach ($classroom->posts()->latest()->get() as $post)
+          <div class="d-flex p-2 mt-2 align-items-center">
+            <img src="{{asset('imgs/icon.png')}}" width="40" height="40" class="rounded-circle me-2" alt="">
+            <div class="ms-2 mt-1">
+              <h6 >{{ $post->user?->name }} add a new post : {{ $post->content }}</h6>
+              <span class="text-secondary">{{$post->created_at->format('j F')}}</span>
+            </div>
+          </div>
+          @endforeach
+        </div>
+
+      </div>
     </div>
 
   </div>
