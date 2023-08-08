@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopicsController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClassroomController;
-use App\Http\Controllers\ClassroomPeopleController;
 use App\Http\Controllers\ClassworkController;
 use App\Http\Controllers\JoinClassroomController;
+use App\Http\Controllers\ClassroomPeopleController;
 
 Route::get('/', function () {
        return view('welcome');
@@ -29,6 +30,9 @@ require __DIR__ . '/auth.php';
 
 
 Route::middleware(['auth'])->group(function () {
+
+       Route::post('comments', [CommentController::class, 'store'])
+              ->name('comments.store');
 
        Route::get('classrooms/{classroom}/join', [JoinClassroomController::class, 'create'])
               ->middleware('signed')
