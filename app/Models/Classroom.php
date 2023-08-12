@@ -65,6 +65,15 @@ class Classroom extends Model
         $query->where('status', '=', $status);
     }
 
+    public function scopeFilter(Builder $builder, $filters)
+    {
+        $builder->when($filters['search'] ?? '' , function ($builder , $value) {
+            $builder->where('name' ,'LIKE' , "%{$value}%")
+            ->orwhere('section' ,'LIKE' , "%{$value}%")
+            ->orwhere('room' ,'LIKE' , "%{$value}%");
+        });
+    }
+
     protected static function booted()
     {
 

@@ -24,11 +24,19 @@ class ClassroomController extends Controller
     public function index(Request $request): Renderable
     {
         $success = session('success');
+
         $classrooms = Classroom::active()
+            ->status('active')
             ->recent()
             ->orderBy('created_at', 'DESC')
-            ->get();
+            ->filter($request->query())
+            ->simplePaginate(4);
 
+
+        // $classrooms = Classroom::active()
+        //     ->recent()
+        //     ->orderBy('created_at', 'DESC')
+        //     ->simplePaginate(4);
 
         return view('classroom.index', compact('classrooms', 'success'));
     }
@@ -63,7 +71,6 @@ class ClassroomController extends Controller
             $classroom->join(Auth::id(), 'teacher');
 
             DB::commit();
-
         } catch (QueryException $e) {
             DB::rollBack();
             return back()
@@ -80,10 +87,10 @@ class ClassroomController extends Controller
         $classroom = Classroom::findOrFail($id);
         $topics = Topic::where('classroom_id', '=', $id)->get();
 
-        $invitation_link = URL::signedRoute('classrooms.join' , [
+        $invitation_link = URL::signedRoute('classrooms.join', [
             'classroom' => $classroom->id,
             'code' => $classroom->code,
-         ]);
+        ]);
 
         return View::make('classroom.show')
             ->with([
