@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Topic;
 use App\Models\Comment;
+use App\Enums\ClassworkType;
 use App\Models\ClassworkUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,9 +15,9 @@ class Classwork extends Model
 {
     use HasFactory;
 
-    const TYPE_ASSIGNMENT = 'assignment';
-    const TYPE_MATERIAL = 'material';
-    const TYPE_QUESTION = 'question';
+    const TYPE_ASSIGNMENT = ClassworkType::ASSIGNMENT->value;
+    const TYPE_MATERIAL = ClassworkType::MATERIAL->value;
+    const TYPE_QUESTION = ClassworkType::QUESTION->value;
 
     const STATUS_PUBLISHED = 'published';
     const STATUS_DRAFT = 'draft';
@@ -46,5 +47,28 @@ class Classwork extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class , 'commentable')->latest();
+    }
+
+    protected $casts = [
+        'options' => 'json',
+        'classroom_id' => 'integer',
+        'published_at' => 'datetime:Y-m-d',
+        'type' => ClassworkType::class,
+    ];
+
+    public function getPublishedDateAttribute()
+    {
+        if ($this->published_at) {
+            return $this->published_at->format('Y-m-d');
+        }
+    }
+
+    protected static function booted()
+    {
+        static::creating(function(Classwork $classwork){
+            if($classwork->published_at == null){
+                $classwork->published_at= now();
+            }
+        });
     }
 }

@@ -3,11 +3,6 @@
 @section('title' , $classroom->name)
 @section('content')
 
-@if(session()->has('sucess'))
-<div class="alert alert-success">
-    {{ $success }}
-</div>
-@endif
 
 <div class="container pt-5">
     <div class="row">

@@ -6,6 +6,7 @@ use App\Models\Topic;
 use App\Models\Classroom;
 use App\Models\Classwork;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,9 +41,11 @@ class ClassworkController extends Controller
     {
         $type = $this->getType($request);
 
+        $classwork = new Classwork();
+
         $topics = $classroom->topics;
 
-        return view('classworks.create' , compact('classroom' , 'type'));
+        return view('classworks.create' , compact('classroom' , 'type' , 'classwork'));
     }
 
     
@@ -55,6 +58,8 @@ class ClassworkController extends Controller
             'title' => ['required' , 'string' , 'max:255'],
             'description' => ['nullable' , 'string'],
             'topic_id' => ['nullable' , 'int' , 'exists:topics,id'],
+            'options.grade' => [Rule::requiredIf(fn() => $type == 'assignment'), 'numeric' , 'min:0'],
+            'options.due' => ['nullable' , 'date' , 'after:published_at'],
         ]);
 
         $request->merge([
@@ -89,7 +94,7 @@ class ClassworkController extends Controller
     
     public function edit(Request $request , Classroom $classroom ,Classwork $classwork)
     {
-        $type = $this->getType($request);
+        $type = $classwork->type->value;
 
         $assigned = $classwork->users()->pluck('id')->toArray();
 
@@ -105,10 +110,14 @@ class ClassworkController extends Controller
     public function update(Request $request,Classroom $classroom, Classwork $classwork)
     {
         
+        $type = $classwork->type;
+
         $validated = $request->validate([
-            'title' => ['required' , 'string' , 'max:255'],
-            'description' => ['nullable' , 'string'],
-            'topic_id' => ['nullable' , 'int' , 'exists:topics,id'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'topic_id' => ['nullable', 'int', 'exists:topics,id'],
+            'options.grade' => [Rule::requiredIf(fn() => $type == 'assignment'), 'numeric' , 'min:0'],
+            'options.due' => ['nullable' , 'date' , 'after:published_at'],
         ]);
 
         $classwork->update($validated);
