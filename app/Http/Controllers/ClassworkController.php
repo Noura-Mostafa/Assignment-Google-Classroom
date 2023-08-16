@@ -26,7 +26,7 @@ class ClassworkController extends Controller
     {
         $classworks = $classroom->classworks()
                ->with('topic')
-               ->orderBy('published_at')
+               ->latest('published_at')
                ->get();        
 
         return view('classworks.index' , [
@@ -85,9 +85,14 @@ class ClassworkController extends Controller
     {
         $classwork->load('comments.user');
         
+        $submissions = Auth::user()->submissions()
+                  ->where('classwork_id' , $classwork->id)
+                  ->get();
+
         return view('classworks.show',[
             'classroom' => $classroom,
             'classwork' => $classwork,
+            'submissions' => $submissions,
         ]);
     }
 

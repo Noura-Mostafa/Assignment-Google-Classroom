@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Classroom;
 use App\Models\Classwork;
+use App\Models\Submission;
 use App\Models\ClassworkUser;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -49,10 +51,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    // public function setEmailAttribute($value)
-    // {
-    //     $this->attributes['email']= strtolower($value);
-    // }
 
     protected function email(): Attribute
     {
@@ -64,19 +62,32 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function classrooms()
     {
-        return $this->belongsToMany(Classroom::class)->withPivot(['role' , 'created_at']);
+        return $this->belongsToMany(Classroom::class)->withPivot(['role', 'created_at']);
     }
 
     public function createdClassrooms()
     {
-        return $this->hasMany(Classroom::class , 'user_id');
+        return $this->hasMany(Classroom::class, 'user_id');
     }
+
 
     public function classworks()
     {
-        return $this->belongsToMany(Classwork::class)->withPivot(['grade' , 'status' , 'submitted_at' , 'created_at'])
-               ->using(ClassworkUser::class);
+        return $this->belongsToMany(
+            Classwork::class,
+            'classwork_user',
+            'user_id',
+            'classwork',
+            'id',
+            'id'
+        )->withPivot(['grade', 'submitted_at', 'status', 'created_at'])->using(ClassworkUser::class);
     }
+    
+    // public function classworks()
+    // {
+    //     return $this->belongsToMany(Classwork::class)->withPivot(['grade' , 'status' , 'submitted_at' , 'created_at'])
+    //            ->using(ClassworkUser::class);
+    // }
 
     public function comments(): HasMany
     {
@@ -86,5 +97,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class, 'user_id');
+    }
+
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
     }
 }

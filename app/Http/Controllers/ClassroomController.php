@@ -32,12 +32,6 @@ class ClassroomController extends Controller
             ->filter($request->query())
             ->simplePaginate(4);
 
-
-        // $classrooms = Classroom::active()
-        //     ->recent()
-        //     ->orderBy('created_at', 'DESC')
-        //     ->simplePaginate(4);
-
         return view('classroom.index', compact('classrooms', 'success'));
     }
 
@@ -59,9 +53,6 @@ class ClassroomController extends Controller
             $path = Classroom::uploadCoverImage($file);
             $validated['cover_image_path'] = $path;
         }
-
-        // $validated['code'] = Str::random(8);
-        // $validated['user_id'] = Auth::id();
 
         DB::beginTransaction();
 

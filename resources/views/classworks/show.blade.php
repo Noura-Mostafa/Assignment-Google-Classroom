@@ -1,8 +1,11 @@
 <x-main-layout :title="$classroom->name">
 
     <div class="container pt-5">
-        <div class="row">
 
+        <x-alert name="success" class="alert-success" />
+        <x-alert name="error" class="alert-danger" />
+        
+        <div class="row">
             <div class="col-lg-9">
                 <div class="header d-flex">
                     <div>
@@ -24,6 +27,31 @@
 
 
             <div class="col-lg-3">
+
+                <div class="shadow-sm p-3 rounded">
+
+                    @if($submissions->count())
+                    <ul>
+                        @foreach ($submissions as $submission)
+                        <li class="mb-1"><a href="{{route('submissions.file' , $submission->id)}}" class="btn btn-light">File #{{$loop->iteration}}</a></li>
+                        @endforeach
+                    </ul>
+                    @else
+                    <form action="{{route('submissions.store' , $classwork->id)}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <x-form.floating-control name="files.0">
+                            <x-slot:label>
+                                <label for="files">Upload Files</label>
+                            </x-slot:label>
+                            <x-form.input name="files[]" multiple type="file" accept="image/*,application/pdf" placeholder="Select files" />
+                        </x-form.floating-control>
+
+
+                        <button type="submit" class="btn btn-success w-100 mt-2">Submit</button>
+                    </form>
+                    @endif
+                </div>
+
                 <form action="{{route('comments.store')}}" method="post">
                     @csrf
                     <input type="hidden" name="id" value="{{$classwork->id}}">
@@ -49,9 +77,8 @@
                     </div>
 
                 </form>
+
             </div>
-
-
         </div>
 
     </div>

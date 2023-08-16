@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ClassworkController;
+use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\JoinClassroomController;
 use App\Http\Controllers\ClassroomPeopleController;
 
@@ -106,4 +107,9 @@ Route::middleware(['auth'])->group(function () {
 
        Route::delete('classrooms/{classroom}/people', [ClassroomPeopleController::class, 'destroy'])
               ->name('classrooms.people.destroy');
+
+       Route::post('classworks/{classwork}/submissions', [SubmissionController::class, 'store'])
+              ->name('submissions.store');
+       Route::get('submissions/{submission}/file',  [SubmissionController::class, 'file'])
+              ->name('submissions.file');
 });

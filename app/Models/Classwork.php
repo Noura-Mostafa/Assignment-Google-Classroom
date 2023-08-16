@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Topic;
 use App\Models\Comment;
+use App\Models\Classroom;
+use App\Models\Submission;
 use App\Enums\ClassworkType;
 use App\Models\ClassworkUser;
 use Illuminate\Database\Eloquent\Model;
@@ -28,27 +30,6 @@ class Classwork extends Model
         'type' , 'status' , 'published_at' , 'options' ,
     ];
 
-    public function classroom(): BelongsTo
-    {
-        return $this->belongsTo(Classroom::class , 'classroom_id' , 'id');
-    }
-
-    public function topic(): BelongsTo
-    {
-        return $this->belongsTo(Topic::class , 'topic_id' , 'id');
-    }
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class)->withPivot(['grade' , 'status' , 'submitted_at' , 'created_at'])
-               ->using(ClassworkUser::class);
-    }
-
-    public function comments()
-    {
-        return $this->morphMany(Comment::class , 'commentable')->latest();
-    }
-
     protected $casts = [
         'options' => 'json',
         'classroom_id' => 'integer',
@@ -71,4 +52,35 @@ class Classwork extends Model
             }
         });
     }
+
+
+    public function classroom(): BelongsTo
+    {
+        return $this->belongsTo(Classroom::class , 'classroom_id' , 'id');
+    }
+
+    public function topic(): BelongsTo
+    {
+        return $this->belongsTo(Topic::class , 'topic_id' , 'id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(
+            User::class,'classwork_user')
+            ->withPivot(['grade' , 'submitted_at' , 'status' , 'created_at'])
+            ->using(ClassworkUser::class);
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class , 'commentable')->latest();
+    }
+
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
+
+    
 }
