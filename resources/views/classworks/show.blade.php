@@ -28,7 +28,7 @@
 
             <div class="col-lg-3">
 
-                <div class="shadow-sm p-3 rounded">
+                <div class="shadow-sm p-3 rounded mb-2">
 
                     @if($submissions->count())
                     <ul>

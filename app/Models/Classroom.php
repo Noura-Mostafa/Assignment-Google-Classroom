@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Exception;
+use App\Models\Post;
 use App\Models\User;
+use App\Models\Topic;
+use App\Models\Classwork;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Observers\ClassroomObserver;
