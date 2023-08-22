@@ -25,7 +25,7 @@
                     <li class="breadcrumb-item active fs-4" aria-current="page">Classworks</li>
                 </ol>
             </div>
-
+            @can('create' , ['App\Models\Classwork' , $classroom])
             <div class="dropdown mt-2">
                 <button class="btn btn-success rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     + Create
@@ -36,6 +36,7 @@
                     <li><a class="dropdown-item" href="{{ route('classrooms.classworks.create' , [$classroom->id , 'type' => 'question']) }}">Question</a></li>
                 </ul>
             </div>
+            @endcan
             <hr class="text-success">
 
             @forelse($classworks as $group)

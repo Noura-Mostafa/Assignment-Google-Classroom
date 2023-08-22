@@ -10,11 +10,14 @@ use Illuminate\Http\Request;
 use App\Models\ClassworkUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class SubmissionController extends Controller
 {
     public function store(Request $request, Classwork $classwork)
     {
+        Gate::authorize('submissions.create' , [$classwork]);
+        
         $request->validate([
             'files' => 'required|array',
             'files.*' => ['file', new ForbiddenFile('text/x-php', 'application/x-msdownload', 'application/x-httpd-php')],

@@ -37,6 +37,8 @@
                         @endforeach
                     </ul>
                     @else
+
+                    @can('submissions.create' , [$classwork])
                     <form action="{{route('submissions.store' , $classwork->id)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <x-form.floating-control name="files.0">
@@ -49,6 +51,8 @@
 
                         <button type="submit" class="btn btn-success w-100 mt-2">Submit</button>
                     </form>
+                    @endcan
+                    
                     @endif
                 </div>
 

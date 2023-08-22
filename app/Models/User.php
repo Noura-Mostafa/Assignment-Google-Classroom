@@ -77,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
             Classwork::class,
             'classwork_user',
             'user_id',
-            'classwork',
+            'classwork_id',
             'id',
             'id'
         )->withPivot(['grade', 'submitted_at', 'status', 'created_at'])->using(ClassworkUser::class);

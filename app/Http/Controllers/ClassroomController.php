@@ -20,9 +20,12 @@ use Illuminate\Contracts\Support\Renderable;
 
 class ClassroomController extends Controller
 {
+
     //Actions
     public function index(Request $request): Renderable
     {
+        $this->authorize('view-any' , Classroom::class);
+
         $success = session('success');
 
         $classrooms = Classroom::active()
