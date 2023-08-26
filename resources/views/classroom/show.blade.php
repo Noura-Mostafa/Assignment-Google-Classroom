@@ -18,19 +18,19 @@
     <div class="col-md-3">
 
       <div class="border rounded p-3 text-center d-flex justify-content-between">
-        <h5 class="mt-2 text-start">Join Link:</h5>
+        <h5 class="mt-2 text-start">{{__('Join Link:')}}</h5>
         <span id="textToCopy" style="display: none;">{{$invitation_link}}</span>
         <button onclick="copyText()" class="btn btn-success"><i class="fas fa-copy"></i></button>
       </div>
 
       <div class="border rounded p-3 text-center mt-2">
-        <h5 class="text-start">Class Code:</h5>
+        <h5 class="text-start">{{__('Class Code:')}}</h5>
         <span class="text-success fs-2 ">{{$classroom->code}}</span>
       </div>
 
       <div class="border rounded p-3 text-center mt-2">
-        <h5 class="text-start">Upcoming</h5>
-        <h6 class="text-secondary">No work due soon</h6>
+        <h5 class="text-start">{{__('Upcoming')}}</h5>
+        <h6 class="text-secondary">{{__('No work due soon')}}</h6>
       </div>
 
     </div>
@@ -45,7 +45,7 @@
 
         <div class="mb-3 shadow-sm p-2 d-flex align-items-center">
           <img src="https://ui-avatars.com/api/?name={{Auth::user()?->name}}&size=35" class="rounded-circle me-2" alt="">
-          <input type="text" name="content" placeholder="Tell us something .." class="rounded-pill border border-none w-100 p-3 me-2">
+          <input type="text" name="content" placeholder="{{__('Tell us something ..')}}" class="rounded-pill border border-none w-100 p-3 me-2">
           <button type="submit" class="btn btn-sm btn-success"><i class="far fa-paper-plane"></i></button>
         </div>
 
@@ -56,7 +56,7 @@
           <div class="d-flex p-2 mt-2 align-items-center">
             <img src="{{asset('imgs/icon.png')}}" width="40" height="40" class="rounded-circle me-2" alt="">
             <div class="ms-2 mt-1">
-              <h6 >{{ $post->user?->name }} add a new post : {{ $post->content }}</h6>
+              <h6 >{{ $post->user?->name }} {{__('add a new post :')}} {{ $post->content }}</h6>
               <span class="text-secondary">{{$post->created_at->format('j F')}}</span>
             </div>
           </div>
@@ -64,6 +64,7 @@
         </div>
 
       </div>
+
     </div>
 
   </div>

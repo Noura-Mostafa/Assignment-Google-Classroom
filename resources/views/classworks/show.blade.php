@@ -15,11 +15,11 @@
                         <h2 class="text-success"> {{$classwork->title}}</h2>
                         <p class="text-secondary">{{auth()->user()->name}} . {{$classwork->published_at}}</p>
                         <hr class="text-success">
-                        <p class="description">{{$classwork->description}}</p>
+                        <p class="description">{!! $classwork->description !!}</p>
                         <hr class="text-success">
-                        <h6><i class="fas fa-users text-success"></i> Class comments</h6>
+                        <h6><i class="fas fa-users text-success"></i> {{__('Class comments')}}</h6>
 
-                        <h6 class="text-success text-decoration-none mt-2">Add a class comment</h6>
+                        <h6 class="text-success text-decoration-none mt-2">{{__('Add a class comment')}}</h6>
 
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                         </x-form.floating-control>
 
 
-                        <button type="submit" class="btn btn-success w-100 mt-2">Submit</button>
+                        <button type="submit" class="btn btn-success w-100 mt-2">{{__('Submit')}}</button>
                     </form>
                     @endcan
                     
@@ -63,7 +63,7 @@
 
 
                     <div class="shadow-sm p-3 rounded">
-                        <h6><i class="fas fa-users text-success"></i> Class comments</h6>
+                        <h6><i class="fas fa-users text-success"></i> {{__('Class comments')}}</h6>
                         @foreach ($classwork->comments()->latest()->get() as $comment)
                         <div class="d-flex p-2 d-flex mt-2 align-items-center">
                             <img src="https://ui-avatars.com/api/?name={{$comment->user?->name}}&size=35" class="rounded-circle me-2" alt="">

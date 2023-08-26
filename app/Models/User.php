@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Profile;
 use App\Models\Classroom;
 use App\Models\Classwork;
 use App\Models\Submission;
@@ -71,23 +72,23 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-    public function classworks()
-    {
-        return $this->belongsToMany(
-            Classwork::class,
-            'classwork_user',
-            'user_id',
-            'classwork_id',
-            'id',
-            'id'
-        )->withPivot(['grade', 'submitted_at', 'status', 'created_at'])->using(ClassworkUser::class);
-    }
-    
     // public function classworks()
     // {
-    //     return $this->belongsToMany(Classwork::class)->withPivot(['grade' , 'status' , 'submitted_at' , 'created_at'])
-    //            ->using(ClassworkUser::class);
+    //     return $this->belongsToMany(
+    //         Classwork::class,
+    //         'classwork_user',
+    //         'user_id',
+    //         'classwork_id',
+    //         'id',
+    //         'id'
+    //     )->withPivot(['grade', 'submitted_at', 'status', 'created_at'])->using(ClassworkUser::class);
     // }
+    
+    public function classworks()
+    {
+        return $this->belongsToMany(Classwork::class)->withPivot(['grade' , 'status' , 'submitted_at' , 'created_at'])
+               ->using(ClassworkUser::class);
+    }
 
     public function comments(): HasMany
     {
@@ -102,5 +103,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function submissions()
     {
         return $this->hasMany(Submission::class);
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'id')
+            ->withDefault();
     }
 }

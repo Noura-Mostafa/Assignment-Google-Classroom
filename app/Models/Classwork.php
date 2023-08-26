@@ -10,6 +10,7 @@ use App\Models\Submission;
 use App\Enums\ClassworkType;
 use App\Models\ClassworkUser;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -80,6 +81,18 @@ class Classwork extends Model
     public function submissions()
     {
         return $this->hasMany(Submission::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function scopeFilter(Builder $builder, $filters)
+    {
+        $builder->when($filters['search'] ?? '' , function ($builder , $value) {
+            $builder->where('title' ,'LIKE' , "%{$value}%");
+        });
     }
 
     

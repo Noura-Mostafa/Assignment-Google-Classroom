@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="container p-5">
-    <h1>Create Topic</h1>
+    <h1>{{__('Create Topic')}}</h1>
     <form action="{{ route('topics.store' , $classroom->id) }}" method="post">
 
         @csrf
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-floating mb-3">
-            <button type="submit" class="btn btn-success">Create Topic</button>
+            <button type="submit" class="btn btn-success">{{__('Create Topic')}}</button>
         </div>
     </form>
 </div>

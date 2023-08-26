@@ -1,11 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html dir="{{App::isLocale('ar')? 'rtl' : 'ltr'}}" lang="{{App::currentLocale()}}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title' , config('app.name'))</title>
+    @if (App::currentLocale() == 'ar')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.rtl.min.css" integrity="sha384-PRrgQVJ8NNHGieOA1grGdCTIt4h21CzJs6SnWH4YMQ6G5F5+IEzOHz67L4SQaF0o" crossorigin="anonymous">
+    @else
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    @endif
     <link rel="stylesheet" href="/css/main.css">
     <script src="https://kit.fontawesome.com/6cb271fdf5.js" crossorigin="anonymous"></script>
 
@@ -26,7 +30,7 @@
  </script>
 
 </head>
-@stack('style') {{-- to add js css files --}}
+@stack('style')
 
 <body>
 
@@ -57,9 +61,9 @@
                                 </svg>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('classrooms.create')}}">Create Class</a></li>
-                                <li><a class="dropdown-item" href="#">Join Class</a></li>
-                                <li><a class="dropdown-item" href="{{route('classrooms.trashed')}}">Trashed</a>
+                                <li><a class="dropdown-item" href="{{route('classrooms.create')}}">{{__('Create Class')}}</a></li>
+                                <li><a class="dropdown-item" href="{{route('classrooms.trashed')}}">{{__('Trashed')}}</a></li>
+                                <li><a class="dropdown-item" href="{{route('profiles.create')}}">{{__('Profile')}}</a></li>
                             </ul>
                         </li>
                         

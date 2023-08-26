@@ -12,12 +12,12 @@
         <a href="#" class="d-block text-black fs-6">{{ $section }} - {{ $room }}</a>
     </div>
     <div class="actions d-flex justify-content-end pb-3 mt-3">
-        <a href="{{ $show }}" class="btn btn-success btn-sm me-1">Show</a>
-        <a href="{{ $edit }}" class="btn btn-secondary btn-sm me-1">Edit</a>
+        <a href="{{ $show }}" class="btn btn-success btn-sm me-1">{{__('View')}}</a>
+        <a href="{{ $edit }}" class="btn btn-secondary btn-sm me-1">{{__('Edit')}}</a>
         <form action="{{ $delete }}" method="post">
             @csrf
             @method('delete')
-            <button type="submit" class="btn btn-warning btn-sm">Delete</button>
+            <button type="submit" class="btn btn-warning btn-sm">{{__('Delete')}}</button>
         </form>
     </div> 
     </div>

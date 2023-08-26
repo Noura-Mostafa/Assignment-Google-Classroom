@@ -4,8 +4,8 @@
   <div class="container pt-5">
   <div style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{route('classrooms.index')}}" class="text-decoration-none text-dark fs-4">Classrooms</a></li>
-    <li class="breadcrumb-item active fs-4" aria-current="page">trashed</li>
+    <li class="breadcrumb-item"><a href="{{route('classrooms.index')}}" class="text-decoration-none text-dark fs-4">{{__('Classrooms')}}</a></li>
+    <li class="breadcrumb-item active fs-4" aria-current="page">{{__('Trashed')}}</li>
   </ol>
 </div>
 
@@ -28,13 +28,13 @@
               <form action="{{ route('classrooms.restore' , $classroom->id) }}" method="post">
                 @csrf
                 @method('put')
-                <button type="submit" class="btn btn-success btn-sm me-1">Restore</button>
+                <button type="submit" class="btn btn-success btn-sm me-1">{{__('Restore')}}</button>
               </form>
 
               <form action="{{ route('classrooms.force-delete' , $classroom->id) }}" method="post">
                 @csrf
                 @method('delete')
-                <button type="submit" class="btn btn-danger btn-sm me-1">Delete forever</button>
+                <button type="submit" class="btn btn-danger btn-sm me-1">{{__('Delete forever')}}</button>
               </form>
             </div>
           </div>
@@ -45,13 +45,4 @@
     </div>
   </div>
 
-
-
-
-
-  @pushIf('true' ,'scripts')
-  <script>
-    console.log('@@stack')
-  </script>
-  @endpushIf
 </x-main-layout>

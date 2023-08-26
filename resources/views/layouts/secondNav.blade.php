@@ -1,11 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html dir="{{App::isLocale('ar')? 'rtl' : 'ltr'}}" lang="{{App::currentLocale()}}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title' , config('app.name'))</title>
+    @if (App::currentLocale() == 'ar')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.rtl.min.css" integrity="sha384-PRrgQVJ8NNHGieOA1grGdCTIt4h21CzJs6SnWH4YMQ6G5F5+IEzOHz67L4SQaF0o" crossorigin="anonymous">
+    @else
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    @endif
     <link rel="stylesheet" href="/css/main.css">
     <script src="https://kit.fontawesome.com/6cb271fdf5.js" crossorigin="anonymous"></script>
 
@@ -33,11 +37,6 @@
         <nav class="navbar navbar-expand-md bg-body-tertiary">
             <div class="container">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    {{--<li class="nav-item">
-                        <a class="nav-link text-secondary fs-5" href="#" onclick="openNav()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                            </svg></a>
-                    </li>--}}
                     <li class="nav-item">
                         <a class="navbar-brand text-secondary fs-4" href="{{route('classrooms.index')}}">
                             <img src="{{asset('imgs/googlelogo_clr_74x24px.svg')}}" alt="Logo" class="d-inline-block align-text-center">
@@ -50,22 +49,22 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav  mb-2 mb-lg-0">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('classrooms.show' , $classroom->id)}}">Stream</a>
+                            <a class="nav-link" href="{{route('classrooms.show' , $classroom->id)}}">{{__('Stream')}}</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('classrooms.people' , $classroom->id)}}">People</a>
+                            <a class="nav-link" href="{{route('classrooms.people' , $classroom->id)}}">{{__('People')}}</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('classrooms.classworks.index' , $classroom->id)}}">Classwork</a>
+                            <a class="nav-link" href="{{route('classrooms.classworks.index' , $classroom->id)}}">{{__('Classwork')}}</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Grade</a>
+                            <a class="nav-link" href="#">{{__('Grade')}}</a>
                         </li>
                     </ul>
 
@@ -77,9 +76,9 @@
                                 </svg>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('classrooms.create')}}">Create Class</a></li>
-                                <li><a class="dropdown-item" href="#">Join Class</a></li>
-                                <li><a class="dropdown-item" href="{{route('classrooms.trashed')}}">Trashed</a>
+                                <li><a class="dropdown-item" href="{{route('classrooms.create')}}">{{__('Create Class')}}</a></li>
+                                <li><a class="dropdown-item" href="{{route('classrooms.trashed')}}">{{__('Trashed')}}</a></li>
+                                <li><a class="dropdown-item" href="{{route('profiles.create')}}">{{__('Profile')}}</a></li>
                             </ul>
                         </li>
 

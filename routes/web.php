@@ -10,9 +10,10 @@ use App\Http\Controllers\ClassworkController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\JoinClassroomController;
 use App\Http\Controllers\ClassroomPeopleController;
+use App\Http\Controllers\ProfilesController;
 
 Route::get('/', function () {
-       return view('welcome');
+       return view('auth.register');
 })->name('home');
 
 
@@ -112,4 +113,7 @@ Route::middleware(['auth'])->group(function () {
               ->name('submissions.store');
        Route::get('submissions/{submission}/file',  [SubmissionController::class, 'file'])
               ->name('submissions.file');
+
+       Route::resource('profiles', ProfilesController::class)->except('index');
+
 });

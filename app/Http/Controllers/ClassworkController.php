@@ -25,13 +25,29 @@ class ClassworkController extends Controller
         return  $type;
     }
 
-    public function index(Classroom $classroom)
+    public function index(Request $request , Classroom $classroom)
     {
         $this->authorize('viewAny' , [Classwork::class , $classroom]);
 
         $classworks = $classroom->classworks()
             ->with('topic')
             ->latest('published_at')
+            ->filter($request->query())
+            ->where(function ($query) {
+                $query->whereRaw(
+                'EXISTS (SELECT 1 FROM classwork_user WHERE classwork_user.classwork_id = classworks.id
+                AND classwork_user.user_id = ?)',
+                Auth::id()
+                );
+
+                $query->orWhereRaw('
+                EXISTS (SELECT 1 FROM classroom_user 
+                WHERE classroom_user.classroom_id = classworks.classroom_id
+                AND classroom_user.user_id = ?
+                AND classroom_user.role = ?
+
+                )' , [Auth::id() , 'teacher']);
+            })
             ->get();
 
         return view('classworks.index', [
@@ -93,7 +109,7 @@ class ClassworkController extends Controller
         });
 
         return redirect()->route('classrooms.classworks.index', $classroom->id)
-            ->with('success', 'Classwork created!');
+            ->with('success', __('Classwork created!'));
     }
 
 
@@ -156,7 +172,7 @@ class ClassworkController extends Controller
 
 
         return redirect()->route('classrooms.classworks.index', $classroom->id)
-            ->with('success', 'Classwork updated!');
+            ->with('success', __('Classwork updated!'));
     }
 
 
