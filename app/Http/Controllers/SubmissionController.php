@@ -70,7 +70,7 @@ class SubmissionController extends Controller
 
         if (!$isTeacher && !$isOwner) {
             abort(403, 'Unauthorized action.');
-        }
+        } 
 
         return response()->file(storage_path('app/' . $submission->content));
     }

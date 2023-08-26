@@ -8,6 +8,7 @@ use App\Models\Classroom;
 use App\Models\Classwork;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Events\ClassworkCreated;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -106,6 +107,9 @@ class ClassworkController extends Controller
 
 
             $classwork->users()->attach($request->input('students'));
+
+            event(new ClassworkCreated($classwork));
+
         });
 
         return redirect()->route('classrooms.classworks.index', $classroom->id)

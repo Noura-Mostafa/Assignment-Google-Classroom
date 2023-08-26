@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Topic;
+use App\Models\Stream;
 use App\Models\Classwork;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -110,6 +111,11 @@ class Classroom extends Model
     public function students()
     {
         return $this->users()->wherePivot('role' , 'student');
+    }
+
+    public function streams()
+    {
+        return $this->hasMany(Stream::class)->latest();
     }
 
     public function posts()
