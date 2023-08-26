@@ -1,16 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ClassworkController;
+use App\Http\Middleware\ApplyUserPreferences;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\JoinClassroomController;
 use App\Http\Controllers\ClassroomPeopleController;
-use App\Http\Controllers\ProfilesController;
 
 Route::get('/', function () {
        return view('auth.register');
@@ -115,5 +118,7 @@ Route::middleware(['auth'])->group(function () {
               ->name('submissions.file');
 
        Route::resource('profiles', ProfilesController::class)->except('index');
+
+       Route::get('/change-language/{locale}', [LanguageController::class ,'changeLanguage'])->name('change.language');
 
 });
