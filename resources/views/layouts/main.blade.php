@@ -37,9 +37,11 @@
                             Classroom</a>
                     </li>
                 </ul>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
@@ -56,11 +58,11 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link fs-5" href="{{route('logout')}}">{{ Auth::user()->name }}</a>
+                            <a class="nav-link fs-6" href="{{route('logout')}}">{{ Auth::user()->name }}</a>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link fs-6 dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Language
                             </a>
                             <ul class="dropdown-menu">
@@ -74,6 +76,7 @@
                     </ul>
 
                 </div>
+
             </div>
         </nav>
     </header>
@@ -82,7 +85,14 @@
         {{ $slot }}
     </main>
 
+    <script>
+        var classroomId;
+        const userId = "{{Auth::id()}}";
+    </script>
+
     @stack('scripts')
+    @vite(['resources/js/app.js'])
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

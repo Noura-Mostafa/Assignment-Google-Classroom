@@ -10,17 +10,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class PostInClassroomStream
 {
-    /**
-     * Create the event listener.
-     */
+    
     public function __construct()
     {
-        //
+        
     }
 
-    /**
-     * Handle the event.
-     */
     public function handle(ClassworkCreated $event): void
     {
         $classwork = $event->classwork;
@@ -32,7 +27,6 @@ class PostInClassroomStream
         ]);
 
         Stream::create([
-        //   'id' => Str::uuid(),
           'classroom_id' => $classwork->classroom_id,
           'user_id' => $event->classwork->user_id,
           'content' => $content,

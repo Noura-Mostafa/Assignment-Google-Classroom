@@ -86,5 +86,12 @@
 
 </div>
 
+@push('scripts')
+<script>
+    var classroomId ;
+    classroomId = "{{$classwork->classroom_id}}";
+</script>
+@endpush
+
 
 @endsection
