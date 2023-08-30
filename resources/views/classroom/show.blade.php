@@ -61,6 +61,18 @@
             </div>
           </div>
           @endforeach
+      
+
+        @foreach ($classroom->streams()->latest()->get() as $stream)
+          <div class="d-flex p-2 mt-2 align-items-center">
+            <img src="{{asset('imgs/icon.png')}}" width="40" height="40" class="rounded-circle me-2" alt="">
+            <div class="ms-2 mt-1">
+              <h6>{{__($stream->content)}}</h6>
+              <p class="text-secondary">{{$stream->created_at->format('j F')}}</p>
+              <a href="{{$stream->link}}" class="text-success text-decoration-none">View instruction</a>
+            </div>
+          </div>
+          @endforeach
         </div>
 
       </div>

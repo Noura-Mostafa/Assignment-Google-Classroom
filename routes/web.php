@@ -16,7 +16,7 @@ use App\Http\Controllers\JoinClassroomController;
 use App\Http\Controllers\ClassroomPeopleController;
 
 Route::get('/', function () {
-       return view('auth.register');
+       return view('welcome');
 })->name('home');
 
 

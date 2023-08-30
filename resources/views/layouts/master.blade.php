@@ -70,6 +70,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('dashboard')}}">{{ Auth::user()->name }}</a>
                         </li>
+
+                        <x-user-notification-menu />
+
                     </ul>
                   
                 </div>

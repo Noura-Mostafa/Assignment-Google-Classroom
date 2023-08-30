@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Topic;
+use App\Models\Stream;
 use App\Models\Classroom;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -76,8 +77,10 @@ class ClassroomController extends Controller
     }
 
 
-    public function show(int $id)
+    public function show(int $id , Stream $stream)
     {
+
+        $stream = Stream::get();
         $classroom = Classroom::findOrFail($id);
         $topics = Topic::where('classroom_id', '=', $id)->get();
 
@@ -92,6 +95,7 @@ class ClassroomController extends Controller
                 'classroom' => $classroom,
                 'topics' => $topics,
                 'invitation_link' => $invitation_link,
+                'stream' => $stream,
             ]);
     }
 

@@ -61,6 +61,9 @@
                             <a class="nav-link fs-6" href="{{route('logout')}}">{{ Auth::user()->name }}</a>
                         </li>
 
+                        <x-user-notification-menu />
+
+
                         <li class="nav-item dropdown">
                             <a class="nav-link fs-6 dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Language
