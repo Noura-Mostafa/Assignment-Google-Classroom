@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Topic;
 use App\Models\Stream;
+use App\Models\Profile;
 use App\Models\Classroom;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class ClassroomController extends Controller
 {
 
     //Actions
-    public function index(Request $request): Renderable
+    public function index(Request $request , Profile $profile): Renderable
     {
         $this->authorize('view-any' , Classroom::class);
 
@@ -36,7 +37,7 @@ class ClassroomController extends Controller
             ->filter($request->query())
             ->simplePaginate(4);
 
-        return view('classroom.index', compact('classrooms', 'success'));
+        return view('classroom.index', compact('classrooms', 'success' , 'profile'));
     }
 
     public function create(): Renderable
@@ -53,7 +54,7 @@ class ClassroomController extends Controller
 
         $validated = $request->validated();
         if ($request->hasFile('cover_image')) {
-            $file = $request->file('cover_image');  //$request->cover_image //return obj uploadedFile
+            $file = $request->file('cover_image');
             $path = Classroom::uploadCoverImage($file);
             $validated['cover_image_path'] = $path;
         }

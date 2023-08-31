@@ -12,12 +12,13 @@ use App\Models\ClassworkUser;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail , HasLocalePreference
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -96,5 +97,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Profile::class, 'user_id', 'id')
             ->withDefault();
+    }
+    
+    public function routeNotificationForEmail($notification = null)
+    {
+        return $this->email;
+    }
+
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'Notifications.' . $this->id;
+    }
+
+    public function preferredLocale()
+    {
+        return $this->profile->locale;
     }
 }
