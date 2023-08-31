@@ -13,6 +13,7 @@ use App\Http\Controllers\ClassworkController;
 use App\Http\Middleware\ApplyUserPreferences;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\JoinClassroomController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ClassroomPeopleController;
 
 Route::get('/', function () {
@@ -118,6 +119,8 @@ Route::middleware(['auth'])->group(function () {
               ->name('submissions.file');
 
        Route::resource('profiles', ProfilesController::class)->except('show');
+
+       Route::get('notifications' , [NotificationsController::class , 'index'])->name('notifications');
 
        Route::get('/change-language/{locale}', [LanguageController::class ,'changeLanguage'])->name('change.language');
 

@@ -7,7 +7,7 @@
     </a>
     <ul class="dropdown-menu">
         @forelse($notifications as $notification)
-        <li>
+        <li class="p-2">
             <a class="dropdown-item" href="{{$notification->data['link']}}?nid={{$notification->id}}">
             @if ($notification->unread()) <b>*</b>
             @endif           
@@ -15,10 +15,11 @@
             <br>
             <small class="text-muted">{{$notification->created_at->diffForHumans()}}</small>
         </a>
-
-    </li>
+   
     @empty
     <p class="text-success text-center">No Notifications</p>
     @endforelse
+    <a href="{{route('notifications')}}" class="text-success">{{__('see all notifications')}}</a>
+    </li>
     </ul>
 </li>
