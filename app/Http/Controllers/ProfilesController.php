@@ -12,14 +12,24 @@ use Illuminate\Support\Facades\Redirect;
 
 class ProfilesController extends Controller
 {
-    
-    public function create(User $user , Profile $profile): View
+
+    public function index()
     {
-        return view('profiles.create' , compact('user' , 'profile'));
+        $profile = Auth::user()->profile;
+        return view('profiles.index' , [
+            'profile' => $profile
+        ]);
+    }
+    
+    public function create(User $user): View
+    {
+        return view('profiles.create' , [
+            'user' => $user,
+        ]);
     }
 
     
-    public function store(Request $request , Profile $profile): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
 
         $request->validate([
@@ -35,11 +45,6 @@ class ProfilesController extends Controller
         
 
         return Redirect::route('classrooms.index');
-    }
-
-    public function show(Profile $profile): View
-    {
-        return view('profiles.show' , compact('profile'));
     }
 
     public function edit(Profile $profile): View

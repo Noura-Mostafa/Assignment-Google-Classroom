@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Topic;
 use App\Models\Stream;
 use App\Models\Profile;
@@ -24,7 +25,7 @@ class ClassroomController extends Controller
 {
 
     //Actions
-    public function index(Request $request , Profile $profile): Renderable
+    public function index(Request $request): Renderable
     {
         $this->authorize('view-any' , Classroom::class);
 
@@ -37,7 +38,7 @@ class ClassroomController extends Controller
             ->filter($request->query())
             ->simplePaginate(4);
 
-        return view('classroom.index', compact('classrooms', 'success' , 'profile'));
+        return view('classroom.index', compact('classrooms', 'success'));
     }
 
     public function create(): Renderable

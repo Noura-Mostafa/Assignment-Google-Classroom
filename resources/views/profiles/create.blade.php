@@ -69,6 +69,7 @@
 
         @else
         <h1 class="text-center">{{__('Already profile Created')}}</h1>
+        <a href="{{route('profiles.index')}}" class="btn btn-success">Profile</a>
         @endif
     </div>
     </x-main-layouts>

@@ -117,7 +117,7 @@ Route::middleware(['auth'])->group(function () {
        Route::get('submissions/{submission}/file',  [SubmissionController::class, 'file'])
               ->name('submissions.file');
 
-       Route::resource('profiles', ProfilesController::class)->except('index');
+       Route::resource('profiles', ProfilesController::class)->except('show');
 
        Route::get('/change-language/{locale}', [LanguageController::class ,'changeLanguage'])->name('change.language');
 

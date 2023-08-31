@@ -13,12 +13,10 @@
         </ol>
       </div>
 
-      <a href="{{route('profiles.show' , $profile->id)}}" class="btn btn-sm btn-success">Profile</a>
-
-      <!-- <form action="{{ URL::current() }}" method="get" class="d-flex mb-3">
+      <form action="{{ URL::current() }}" method="get" class="d-flex mb-3">
         <input type="text" placeholder="{{__('Search')}}" name="search" class="form-control me-1">
         <button class="btn btn-dark" type="submit">{{__('Search')}}</button>
-      </form> -->
+      </form>
     </div>
 
 

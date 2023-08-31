@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Topic;
 use App\Models\Classroom;
 use App\Models\Classwork;
@@ -26,7 +25,7 @@ class ClassworkController extends Controller
         return  $type;
     }
 
-    public function index(Request $request , Classroom $classroom)
+    public function index(Request $request , Classroom $classroom , Classwork $classwork)
     {
         $this->authorize('viewAny' , [Classwork::class , $classroom]);
 
@@ -55,6 +54,7 @@ class ClassworkController extends Controller
             'classroom' => $classroom,
             'classworks' => $classworks->groupBy('topic_id'),
             'topics' => Topic::all(),
+            'classwork' => $classwork
         ]);
     }
 
