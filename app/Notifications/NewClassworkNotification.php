@@ -3,13 +3,15 @@
 namespace App\Notifications;
 
 use App\Models\Classwork;
+use App\Notifications\Channels\HadaraSmsChannel;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\VonageMessage;
 use Illuminate\Notifications\Messages\DatabaseMessage;
-use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class NewClassworkNotification extends Notification
 {
@@ -27,7 +29,12 @@ class NewClassworkNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        $via = ['database', 'mail', 'broadcast'];
+        $via = ['database',
+         'mail',
+         'broadcast' ,
+         // 'vonage',
+         //HadaraSmsChannel::class
+        ];
         return $via;
     }
 
@@ -57,6 +64,17 @@ class NewClassworkNotification extends Notification
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
         return new BroadcastMessage($this->createMessage());
+    }
+
+    public function toHadara(object $notifiable):string
+    {
+        return __('A new Classwork created');
+    }
+
+    public function toVonage(object $notifiable): VonageMessage
+    {
+        return (new VonageMessage)
+            ->content(__('A new Classwork created'));
     }
 
     protected function createMessage(): array

@@ -113,4 +113,14 @@ class User extends Authenticatable implements MustVerifyEmail , HasLocalePrefere
     {
         return $this->profile->locale;
     }
+
+    public function routeNotificationForVonage($notification = null)
+    {
+        return '972595718157';
+    }
+
+    public function routeNotificationForHadara($notification = null)
+    {
+        return '972595718157';
+    }
 }

@@ -31,6 +31,17 @@ class ClassworkController extends Controller
 
         $classworks = $classroom->classworks()
             ->with('topic')
+            ->withCount([
+                'users as assigned_count' => function($query) {
+                    $query->where('classwork_user.status' , 'assigned');
+                } ,
+                'users as turnedin_count' => function($query) {
+                    $query->where('classwork_user.status' , 'submitted');
+                } ,
+                'users as graded_count' => function($query) {
+                    $query->whereNotNull('classwork_user.grade');
+                } ,
+            ])
             ->latest('published_at')
             ->filter($request->query())
             ->where(function ($query) {

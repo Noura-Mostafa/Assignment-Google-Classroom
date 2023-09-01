@@ -58,7 +58,27 @@
                     </h2>
                     <div id="flush-collapse{{$classwork->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body text-secondary">
-                            <h6>{!! $classwork->description !!}</h6>
+                        <div class="row">
+                                <div class="col-md-6">
+                                <h6>{!! $classwork->description !!}</h6>
+                                </div>
+                                <div class="col-md-6 row">
+                                    <div class="col-md-4">
+                                        {{ $classwork->assigned_count }}
+                                        <br> {{__('Assigned')}}
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        {{ $classwork->turnedin_count }}
+                                        <br> {{__('Turned In')}}
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        {{ $classwork->graded_count }}
+                                        <br> {{__('Graded')}}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="actions d-flex mt-3">
                                 <a href="{{route('classrooms.classworks.show' , [$classroom->id , $classwork->id])}}" class="btn rounded-pill btn-sm btn-outline-success me-1">
                                     {{__('View')}}
