@@ -30,6 +30,15 @@ class Classroom extends Model
         'name', 'section', 'subject', 'room', 'theme', 'cover_image_path', 'code', 'user_id'
     ];
 
+    protected $appends = [
+        'cover_image_url'
+    ];
+
+    protected $hidden = [
+        'deleted_at',
+        'cover_image_path'
+    ];
+
 
     public function getRouteKeyName()
     {
@@ -71,10 +80,10 @@ class Classroom extends Model
 
     public function scopeFilter(Builder $builder, $filters)
     {
-        $builder->when($filters['search'] ?? '' , function ($builder , $value) {
-            $builder->where('name' ,'LIKE' , "%{$value}%")
-            ->orwhere('section' ,'LIKE' , "%{$value}%")
-            ->orwhere('room' ,'LIKE' , "%{$value}%");
+        $builder->when($filters['search'] ?? '', function ($builder, $value) {
+            $builder->where('name', 'LIKE', "%{$value}%")
+                ->orwhere('section', 'LIKE', "%{$value}%")
+                ->orwhere('room', 'LIKE', "%{$value}%");
         });
     }
 
@@ -90,27 +99,27 @@ class Classroom extends Model
 
     public function classworks(): HasMany
     {
-        return $this->hasMany(Classwork::class , 'classroom_id' , 'id');
+        return $this->hasMany(Classwork::class, 'classroom_id', 'id');
     }
 
     public function topics(): HasMany
     {
-        return $this->hasMany(Topic::class , 'classroom_id' , 'id');
+        return $this->hasMany(Topic::class, 'classroom_id', 'id');
     }
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->withPivot(['role' , 'created_at']);
+        return $this->belongsToMany(User::class)->withPivot(['role', 'created_at']);
     }
 
     public function teachers()
     {
-        return $this->users()->wherePivot('role' , 'teacher');
+        return $this->users()->wherePivot('role', 'teacher');
     }
 
     public function students()
     {
-        return $this->users()->wherePivot('role' , 'student');
+        return $this->users()->wherePivot('role', 'student');
     }
 
     public function streams()
@@ -123,24 +132,27 @@ class Classroom extends Model
         return $this->hasMany(Post::class);
     }
 
-    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
     public function join($user_id, $role = 'student')
     {
 
         $exists = $this->users()
-        ->wherePivot('user_id', $user_id)
-        ->exists(); 
+            ->wherePivot('user_id', $user_id)
+            ->exists();
 
         if ($exists) {
             throw new Exception('User already joined the class');
         }
 
-        return $this->users()->attach($user_id , [
-            'role'=> $role,
-            'created_at' =>now()
+        return $this->users()->attach($user_id, [
+            'role' => $role,
+            'created_at' => now()
         ]);
-
     }
 
     //Accessor
