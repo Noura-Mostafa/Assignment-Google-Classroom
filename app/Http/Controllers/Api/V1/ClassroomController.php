@@ -7,14 +7,19 @@ use App\Models\Classroom;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ClassroomResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use App\Http\Resources\ClassroomResource;
 
 class ClassroomController extends Controller
 {
 
     public function index()
     {
+        if (!Auth::guard('sanctum')->user()->tokenCan('classrooms.read')) {
+            abort(403);
+        };
+        
         $classrooms = Classroom::with('user:id,name', 'topics')
             ->withCount('students as students')
             ->paginate(2); 
@@ -26,6 +31,10 @@ class ClassroomController extends Controller
 
     public function store(Request $request)
     {
+        if (!Auth::guard('sanctum')->user()->tokenCan('classrooms.create')) {
+            abort(403);
+        };
+
         try {
             $request->validate([
                 'name' => ['required']
@@ -48,6 +57,10 @@ class ClassroomController extends Controller
 
     public function show(Classroom $classroom)
     {
+        if (!Auth::guard('sanctum')->user()->tokenCan('classrooms.read')) {
+            abort(403);
+        };
+
         return new ClassroomResource($classroom->load('user')->loadCount('students'));
         
     }
@@ -55,6 +68,10 @@ class ClassroomController extends Controller
 
     public function update(Request $request, Classroom $classroom)
     {
+        if (!Auth::guard('sanctum')->user()->tokenCan('classrooms.update')) {
+            abort(403);
+        };
+
         $request->validate([
             'name' => ['sometimes' , 'required' , Rule::unique('classrooms' , 'name')->ignore($classroom->id)],
             'section' => ['sometimes' , 'required']
@@ -72,7 +89,11 @@ class ClassroomController extends Controller
 
     public function destroy(string $id)
     {
-        Classroom::destroy($id);
+        if (!Auth::guard('sanctum')->user()->tokenCan('classrooms.delete')) {
+            abort(403);
+        };
+
+        Classroom::findOrFail($id)->delete();
 
         return response()->json([] , 204);
 
