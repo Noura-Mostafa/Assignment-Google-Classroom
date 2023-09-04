@@ -25,10 +25,6 @@ class AccessTokensController extends Controller
     public function store(Request $request)
     {
 
-        if (!Auth::guard('sanctum')->user()->tokenCan('classrooms.create')) {
-            abort(403);
-        };
-
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
