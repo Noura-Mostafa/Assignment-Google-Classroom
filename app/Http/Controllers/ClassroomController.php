@@ -23,8 +23,12 @@ use Illuminate\Contracts\Support\Renderable;
 
 class ClassroomController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('subscribed')->only('create' , 'store');
+    }
 
-    //Actions
+
     public function index(Request $request): Renderable
     {
         $this->authorize('view-any' , Classroom::class);

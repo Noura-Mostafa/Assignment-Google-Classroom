@@ -8,15 +8,16 @@ use App\Models\Profile;
 use App\Models\Classroom;
 use App\Models\Classwork;
 use App\Models\Submission;
+use App\Models\Subscription;
 use App\Models\ClassworkUser;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 
 class User extends Authenticatable implements MustVerifyEmail , HasLocalePreference
 {
@@ -97,6 +98,11 @@ class User extends Authenticatable implements MustVerifyEmail , HasLocalePrefere
     {
         return $this->hasOne(Profile::class, 'user_id', 'id')
             ->withDefault();
+    }
+    
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
     }
     
     public function routeNotificationForEmail($notification = null)

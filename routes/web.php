@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PlansController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ClassworkController;
@@ -14,6 +16,7 @@ use App\Http\Middleware\ApplyUserPreferences;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\JoinClassroomController;
 use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\ClassroomPeopleController;
 
 Route::get('/', function () {
@@ -35,8 +38,17 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 
+Route::get('plans', [PlansController::class, 'index'])->name('plans');
 
 Route::middleware(['auth'])->group(function () {
+
+       Route::get('subscriptions/{subscription}/pay', [PaymentsController::class, 'create'])->name('checkout');
+
+       Route::post('subscriptions', [SubscriptionsController::class, 'store'])->name('subscriptions.store');
+
+       Route::post('payments', [PaymentsController::class, 'store'])->name('payments.store');
+       Route::get('payments/success', [PaymentsController::class, 'success'])->name('payments.success');
+       Route::get('payments/cancel', [PaymentsController::class, 'cancel'])->name('payments.cancel');
 
        Route::post('comments', [CommentController::class, 'store'])
               ->name('comments.store');
@@ -120,8 +132,7 @@ Route::middleware(['auth'])->group(function () {
 
        Route::resource('profiles', ProfilesController::class)->except('show');
 
-       Route::get('notifications' , [NotificationsController::class , 'index'])->name('notifications');
+       Route::get('notifications', [NotificationsController::class, 'index'])->name('notifications');
 
-       Route::get('/change-language/{locale}', [LanguageController::class ,'changeLanguage'])->name('change.language');
-
+       Route::get('/change-language/{locale}', [LanguageController::class, 'changeLanguage'])->name('change.language');
 });
