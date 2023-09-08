@@ -6,7 +6,6 @@
     <title>Accept a payment</title>
     <meta name="description" content="A demo of a payment on Stripe" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="checkout.css" />
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 
@@ -27,12 +26,11 @@
     </form>
 
     <script>
-        // This is your test publishable API key.
-        const stripe = Stripe("{{ config('services.stripe.publishable_key') }}");
+        const stripe = Stripe("{{ config('services.stripe.publishable_key')}}");
 
         // The items the customer wants to buy
         const items = [{
-            id: "{{$subscription->id}}"
+            id: "{{ $subscription->id }}"
         }];
 
         let elements;
@@ -49,14 +47,14 @@
         async function initialize() {
             const {
                 clientSecret
-            } = await fetch("{{ route('payments.store') }}", {
+            } = await fetch("{{ route('payments.store')}}", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    "_token" : "{{ csrf_token() }}",
-                    "id" : "{{ $subscription->id }}"
+                    "_token": "{{ csrf_token() }}",
+                    "subscription_id": "{{ $subscription->id }}"
                 }),
             }).then((r) => r.json());
 
