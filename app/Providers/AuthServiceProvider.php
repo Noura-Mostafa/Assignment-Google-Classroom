@@ -28,8 +28,11 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        Gate::before(function (User $user, $ability) {
-        });
+        // Gate::before(function ($user, $ability) {
+        //     if ($user->is_super_admin){
+        //         return true;
+        //     }
+        // });
 
 
         // Gate::define('classworks.create', function (User $user, Classroom $classroom) {
