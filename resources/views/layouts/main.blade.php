@@ -58,7 +58,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link fs-6" href="{{route('logout')}}">{{ Auth::user()->name }}</a>
+                            <a class="nav-link fs-6" href="{{route('logout')}}">{{ Auth::user()?->name }}</a>
                         </li>
 
                         <x-user-notification-menu />

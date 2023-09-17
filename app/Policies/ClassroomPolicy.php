@@ -13,7 +13,7 @@ class ClassroomPolicy
     {
     }
 
-    public function viewAny(User $user)
+    public function viewAny($user)
     {
         return true;
     }

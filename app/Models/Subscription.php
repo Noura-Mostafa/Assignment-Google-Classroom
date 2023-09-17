@@ -2,23 +2,31 @@
 
 namespace App\Models;
 
+use App\Concerns\HasPrice;
 use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Prunable;
 
 class Subscription extends Model
 {
-    use HasFactory;
+    use HasFactory , HasPrice , Prunable;
 
-    public function price(): Attribute
+    protected $fillable = [
+        'plan_id' , 'user_id' , 'price' , 'status' , 'expires_at'
+    ];
+
+    protected $casts = [
+        'expires_at' => 'datetime',
+    ];
+
+    public function prunable()
     {
-        return new Attribute(
-            get: fn ($price) => $price/100,
-            set: fn ($price) => $price*100,
-        );
+        return static::whereDate('exprires_at' , '<=' ,  now()->subYear());
     }
+
 
     public function user()
     {

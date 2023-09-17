@@ -41,7 +41,7 @@ class ApplyUserPreferences
         }
         $user = Auth::user();
         if ($user) {
-            $locale = $user->profile->locale;
+            $locale = $user->profile->locale ?? '';
         }
         App::setlocale($locale);
 

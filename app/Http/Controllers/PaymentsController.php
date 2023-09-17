@@ -6,86 +6,51 @@ use Error;
 use Stripe\Charge;
 use Stripe\StripeClient;
 use App\Models\Subscription;
+use App\Services\Payments\StripePayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class PaymentsController extends Controller
 {
-    public function create(Subscription $subscription)
+    public function create(StripePayment $stripe, Subscription $subscription)
     {
-        return view('checkout', [
-            'subscription' => $subscription,
-        ]);
+        //check if subscription is pending before continue
+        return $stripe->createCheckoutSession($subscription);
     }
 
     public function store(Request $request)
     {
-    
-            $subscription = Subscription::findOrFail($request->subscription_id);
-    
-            $stripe = new StripeClient(config('services.stripe.secret_key'));
-            try {
-    
-                $paymentIntent = $stripe->paymentIntents->create([
-                    'amount' => $subscription->price*100,
-                    'currency' => 'usd',
-                    'automatic_payment_methods' => [
-                        'enabled' => true,
-                    ],
-                ]);
-            
-                return [
-                    'clientSecret' => $paymentIntent->client_secret,
-                ];
-            
-            } catch (Error $e) {
-                return Response::json([
-                    'error' => $e->getMessage(),
-                ] , 500);
-            }
-        
+
+        $subscription = Subscription::findOrFail($request->subscription_id);
+
+        $stripe = new StripeClient(config('services.stripe.secret_key'));
+        try {
+
+            $paymentIntent = $stripe->paymentIntents->create([
+                'amount' => $subscription->price * 100,
+                'currency' => 'usd',
+                'automatic_payment_methods' => [
+                    'enabled' => true,
+                ],
+            ]);
+
+            return [
+                'clientSecret' => $paymentIntent->client_secret,
+            ];
+        } catch (Error $e) {
+            return Response::json([
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    public function success(Request $request)
+    public function success(Request $request, Subscription $subscription)
     {
-        return $request->all();
-
-        $stripe = new \Stripe\StripeClient(config('services.stripe.secret_key'));
-        $payment_intent = $stripe->paymentIntents->retrieve([
-            $request->input('payment_intent'),
-            ],
-        );
+        return view('payments.success');
     }
 
-    public function cancel(Request $request)
+    public function cancel(Request $request, Subscription $subscription)
     {
-        return $request->all();
+        return view('payments.cancel');
     }
 }
-
-
-
-
-
-// $stripe->charges->create([
-//     'amount' => $subscription->price * 100 ,
-//     'currency' => 'usd',
-//     'source' => $subscription->id,
-//     'description' => $subscription->name,
-// ]); 
-
-
-// \Stripe\Stripe::setApiKey(config('services.stripe.secert_key'));
-
-// $checkout_session = Charge::create([
-//     // 'line_items' => [[
-//     //     # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
-//     //     'price' => $subscription->price,
-//     //     'quantity' => 1,
-//     // ]],
-//     'mode' => 'setup',
-//     'client_reference_id' => $subscription->id,
-//     'customer_email' => $subscription->user->email,
-//     'success_url' => route('payments.success'),
-//     'cancel_url' =>  route('payments.cancel'),
-// ]);
