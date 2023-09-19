@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Topic;
 use App\Models\Stream;
+use App\Models\Message;
 use App\Models\Classwork;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -137,6 +138,10 @@ class Classroom extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function messages()
+    {
+        return $this->morphMany(Message::class , 'recipient');
+    }
 
     public function join($user_id, $role = 'student')
     {

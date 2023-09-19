@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\ClassroomController;
 use App\Http\Controllers\Api\V1\ClassworkController;
 use App\Http\Controllers\Api\V1\AccessTokensController;
+use App\Http\Controllers\Api\V1\ClassroomMessagesController;
 
 Route::prefix('v1')->group(function () {
 
@@ -21,6 +22,8 @@ Route::prefix('v1')->group(function () {
 
         Route::apiResource('classrooms', ClassroomController::class);
         Route::apiResource('classrooms.classworks', ClassworkController::class);
+
+        Route::apiResource('classrooms.messages' , ClassroomMessagesController::class);
 
     });
 

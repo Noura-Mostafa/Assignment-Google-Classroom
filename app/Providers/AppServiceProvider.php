@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Classroom;
 use App\Models\Classwork;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -31,7 +32,8 @@ class AppServiceProvider extends ServiceProvider
             'post' => Post::class,
             'classwork' => Classwork::class,
             'user' => User::class,
-            'admin' => Admin::class
+            'admin' => Admin::class,
+            'classroom' => Classroom::class
         ]);
     }
 }

@@ -182,4 +182,11 @@ class ClassroomController extends Controller
         return Redirect::route('classrooms.trashed')
             ->with('success', "Classroom ({$classroom->name}) has been Deleted");
     }
+
+    public function chat(Classroom $classroom)
+    {
+        return view('classroom.chat' , [
+            'classroom' => $classroom,
+        ]);
+    }
 }

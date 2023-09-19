@@ -39,7 +39,7 @@ Route::middleware('auth:web,admin')->group(function () {
 
 //require __DIR__ . '/auth.php';
 
-Route::get('admin/2fa' , [TwoFactorAuthenticationController::class , 'create'] );
+Route::get('admin/2fa', [TwoFactorAuthenticationController::class, 'create']);
 Route::get('plans', [PlansController::class, 'index'])->name('plans');
 
 Route::middleware(['auth:web,admin'])->group(function () {
@@ -49,9 +49,9 @@ Route::middleware(['auth:web,admin'])->group(function () {
        Route::post('subscriptions', [SubscriptionsController::class, 'store'])->name('subscriptions.store');
 
        Route::post('payments', [PaymentsController::class, 'store'])->name('payments.store');
-       Route::get('payments/{subscription}/success' , [PaymentsController::class , 'success'])->name('payments.success');
-       Route::get('payments/{subscription}/cancel' , [PaymentsController::class , 'cancel'])->name('payments.cancel');
-   
+       Route::get('payments/{subscription}/success', [PaymentsController::class, 'success'])->name('payments.success');
+       Route::get('payments/{subscription}/cancel', [PaymentsController::class, 'cancel'])->name('payments.cancel');
+
        Route::post('comments', [CommentController::class, 'store'])
               ->name('comments.store');
 
@@ -73,6 +73,8 @@ Route::middleware(['auth:web,admin'])->group(function () {
                      Route::put('/{id}', 'restore')->name('restore');
                      Route::delete('/{id}', 'forceDelete')->name('force-delete');
               });
+
+       Route::get('classrooms/{classroom}/chat', [ClassroomController::class, 'chat'])->name('classrooms.chat');
 
 
        Route::resource('/classrooms', ClassroomController::class)
@@ -139,4 +141,4 @@ Route::middleware(['auth:web,admin'])->group(function () {
        Route::get('/change-language/{locale}', [LanguageController::class, 'changeLanguage'])->name('change.language');
 });
 
-Route::post('/payments/stripe/webhook' , StripeController::class);
+Route::post('/payments/stripe/webhook', StripeController::class);

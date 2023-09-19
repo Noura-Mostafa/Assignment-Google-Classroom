@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Message;
 use App\Models\Profile;
 use App\Models\Classroom;
 use App\Models\Classwork;
@@ -87,6 +88,16 @@ class User extends Authenticatable implements HasLocalePreference
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class, 'user_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->morphMany(Message::class , 'recipient');
+    }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class , 'sender_id');
     }
 
     public function submissions()

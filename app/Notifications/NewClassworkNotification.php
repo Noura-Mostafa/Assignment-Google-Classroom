@@ -19,8 +19,7 @@ class NewClassworkNotification extends Notification implements ShouldQueue
 
     public function __construct(protected Classwork $classwork)
     {
-        $this->onQueue('notifications');
-
+        // $this->onQueue('notifications');
     }
 
     /**
