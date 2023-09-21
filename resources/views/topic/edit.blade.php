@@ -1,9 +1,7 @@
-@extends('layouts.master')
+<x-main-layout title="{{__('Edit Topic')}}">
 
-@section('title' , 'edit')
-@section('content')
 
-<div class="container p-5">
+<div class="container pt-5">
     <h1>{{__('Edit Topic')}}</h1>
     <form action="{{ route('topics.update' , $topic->id) }}" method="post">
 
@@ -34,4 +32,4 @@
     </form>
 </div>
 
-@endsection
+</x-main-layout>

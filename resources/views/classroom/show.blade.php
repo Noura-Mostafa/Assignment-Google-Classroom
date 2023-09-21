@@ -3,11 +3,11 @@
 @section('title' , 'Show')
 @section('content')
 
-<div class="container p-5">
+<div class="container pt-5">
 
-  <div class="header position-relative border rounded w-100">
+  <div class="header position-relative border rounded h-50">
     <img src="{{ asset('uploads/' . $classroom->cover_image_path)}}" alt="..." class="w-100 border rounded">
-    <div class="content position-absolute bottom-0 start-0 p-5  text-white">
+    <div class="content position-absolute bottom-0 start-0 p-5 text-white">
       <h1>{{ $classroom->name }}</h1>
       <h2>{{ $classroom->subject }}</h2>
     </div>
@@ -68,8 +68,8 @@
             <img src="{{asset('imgs/icon.png')}}" width="40" height="40" class="rounded-circle me-2" alt="">
             <div class="ms-2 mt-1">
               <h6>{{__($stream->content)}}</h6>
-              <p class="text-secondary">{{$stream->created_at->format('j F')}}</p>
-              <a href="{{$stream->link}}" class="text-success text-decoration-none">View instruction</a>
+              <small class="text-secondary">{{$stream->created_at->format('j F')}}</small>
+              <small><a href="{{$stream->link}}" class="text-success fw-bold text-decoration-none">View instruction</a></small>
             </div>
           </div>
           @endforeach

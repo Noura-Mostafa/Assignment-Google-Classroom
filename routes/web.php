@@ -12,7 +12,6 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ClassworkController;
-use App\Http\Middleware\ApplyUserPreferences;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\JoinClassroomController;
 use App\Http\Controllers\NotificationsController;
@@ -104,9 +103,6 @@ Route::middleware(['auth:web,admin'])->group(function () {
 
        Route::get('/topics/create/{classroom}', [TopicsController::class, 'create'])
               ->name('topics.create');
-
-       Route::get('/topics/{id}', [TopicsController::class, 'show'])
-              ->name('topics.show')->where('id', '\d+');
 
        Route::get('/topics/edit/{id}', [TopicsController::class, 'edit'])
               ->name('topics.edit')->where('id', '\d+');

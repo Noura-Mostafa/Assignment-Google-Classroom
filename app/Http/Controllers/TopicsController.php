@@ -17,6 +17,8 @@ class TopicsController extends Controller
 {
     public function index(): Renderable
     {
+        $this->authorize('viewAny' , [Topic::class]);
+
         $topic = Topic::all();
 
         return view('topic.index', compact('topic'));
@@ -24,6 +26,8 @@ class TopicsController extends Controller
 
     public function create(Classroom $classroom)
     {
+        $this->authorize('create' , [Topic::class]);
+
         return view()->make('topic.create', [
             'topic' => new Topic(),
             'classroom' => $classroom,
@@ -32,6 +36,8 @@ class TopicsController extends Controller
 
     public function store(TopicRequest $request, Classroom $classroom): RedirectResponse
     {
+        $this->authorize('create' , [Topic::class]);
+
 
         $validated = $request->validated();
 
@@ -44,16 +50,10 @@ class TopicsController extends Controller
     }
 
 
-    public function show(int $id, Classroom $classroom): BaseView
+    public function edit(Topic $topic, Classroom $classroom)
     {
-        $topic = Topic::findOrFail($id);
+        $this->authorize('update' , [Topic::class , $topic]);
 
-        return View::make('topic.show', compact('classroom', 'topic'));
-    }
-
-    public function edit(int $id, Classroom $classroom)
-    {
-        $topic = Topic::find($id);
         if (!$topic) {
             abort(404);
         }
@@ -63,9 +63,10 @@ class TopicsController extends Controller
 
 
 
-    public function update(TopicRequest $request, $id, Classroom $classroom)
+    public function update(TopicRequest $request, Topic $topic, Classroom $classroom)
     {
-        $topic = Topic::findOrFail($id);
+        $this->authorize('update' , [Topic::class , $topic]);
+
 
         $validated = $request->validated();
 
@@ -77,9 +78,10 @@ class TopicsController extends Controller
         return redirect()->route('topics.index', compact('topic', 'classroom'));
     }
 
-    public function destroy($id)
+    public function destroy(Topic $topic)
     {
-        $topic = Topic::findOrFail($id);
+        $this->authorize('delete' , [Topic::class , $topic]);
+
         $topic->delete();
         return Redirect::back();
     }

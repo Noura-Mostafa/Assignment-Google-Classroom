@@ -1,19 +1,6 @@
 nav {
     box-shadow: 5px 5px 5px #eee !important;
   }
-
-/* .top-content {
-    background: url(../imgs/img_bookclub.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  } */
-  
-  /* .person {
-    height: 4.6875rem;
-    margin-top: -3.09375rem;
-    width: 4.6875rem;
-  } */
   
   .card .top-content a{
     text-decoration: none;
@@ -22,16 +9,31 @@ nav {
   .card .top-content a:hover{
      text-decoration: underline;
   }
-
-  /* .header{
-    background: url(../imgs/img_bookclub.jpg);
-  } */
-
+  
   body{
     overflow-x: hidden;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
   }
 
   main{
-    height: calc(100vh - 62px) !important;
+    height: calc(100vh - 100px) !important;
+  }
+
+  .side-menu {
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+  }
+  
+  .side-menu .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
   }

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\DevicesController;
 use App\Http\Controllers\Api\V1\ClassroomController;
 use App\Http\Controllers\Api\V1\ClassworkController;
 use App\Http\Controllers\Api\V1\AccessTokensController;
@@ -18,6 +19,9 @@ Route::prefix('v1')->group(function () {
 
         Route::get('auth/access-tokens' , [AccessTokensController::class , 'index']);
         Route::delete('auth/access-tokens/{id?}' , [AccessTokensController::class , 'destroy']);
+
+        Route::post('devices' , [DevicesController::class , 'store'])->name('devices.store');
+        Route::delete('devices' , [DevicesController::class , 'destroy'])->name('devices.destroy');
 
 
         Route::apiResource('classrooms', ClassroomController::class);

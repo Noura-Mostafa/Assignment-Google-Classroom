@@ -3,15 +3,22 @@
 namespace App\Notifications;
 
 use App\Models\Classwork;
-use App\Notifications\Channels\HadaraSmsChannel;
 use Illuminate\Bus\Queueable;
+use NotificationChannels\Fcm\FcmChannel;
+use NotificationChannels\Fcm\FcmMessage;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Notifications\Channels\HadaraSmsChannel;
 use Illuminate\Notifications\Messages\MailMessage;
+use NotificationChannels\Fcm\Resources\ApnsConfig;
 use Illuminate\Notifications\Messages\VonageMessage;
+use NotificationChannels\Fcm\Resources\AndroidConfig;
 use Illuminate\Notifications\Messages\DatabaseMessage;
+use NotificationChannels\Fcm\Resources\ApnsFcmOptions;
 use Illuminate\Notifications\Messages\BroadcastMessage;
+use NotificationChannels\Fcm\Resources\AndroidFcmOptions;
+use NotificationChannels\Fcm\Resources\AndroidNotification;
 
 class NewClassworkNotification extends Notification implements ShouldQueue
 {
@@ -30,6 +37,7 @@ class NewClassworkNotification extends Notification implements ShouldQueue
     public function via(object $notifiable): array
     {
         $via = ['database',
+        FcmChannel::class
          //'mail',
          //'broadcast' ,
          // 'vonage',
@@ -38,6 +46,31 @@ class NewClassworkNotification extends Notification implements ShouldQueue
         return $via;
     }
 
+    public function toFcm($notifiable)
+    {
+        $content = __(':name posted a new :type :title', [
+            'name' => $this->classwork->user->name,
+            'type' => __($this->classwork->type->value),
+            'title' => $this->classwork->title,
+        ]);
+
+        return FcmMessage::create()
+            ->setData([
+                'classwork_id' => "{$this->classwork->id}",
+                'user_id' => "{$this->classwork->user_id}",
+            ])
+            ->setNotification(\NotificationChannels\Fcm\Resources\Notification::create()
+                ->setTitle('New Classwork')
+                ->setBody($content)
+                ->setImage('http://example.com/url-to-image-here.png'))
+            ->setAndroid(
+                AndroidConfig::create()
+                    ->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))
+                    ->setNotification(AndroidNotification::create()->setColor('#0A0A0A'))
+            )->setApns(
+                ApnsConfig::create()
+                    ->setFcmOptions(ApnsFcmOptions::create()->setAnalyticsLabel('analytics_ios')));
+    }
 
     public function toMail(object $notifiable): MailMessage
     {

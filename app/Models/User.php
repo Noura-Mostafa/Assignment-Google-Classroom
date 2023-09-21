@@ -9,6 +9,7 @@ use App\Models\Profile;
 use App\Models\Classroom;
 use App\Models\Classwork;
 use App\Models\Submission;
+use App\Models\DeviceToken;
 use App\Models\Subscription;
 use App\Models\ClassworkUser;
 use Laravel\Sanctum\HasApiTokens;
@@ -105,6 +106,11 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasMany(Submission::class);
     }
 
+    public function devices()
+    {
+        return $this->morphMany(DeviceToken::class , 'tokenable') ;
+    }
+
     public function profile()
     {
         return $this->hasOne(Profile::class, 'user_id', 'id')
@@ -139,5 +145,11 @@ class User extends Authenticatable implements HasLocalePreference
     public function routeNotificationForHadara($notification = null)
     {
         return '972595718157';
+    }
+
+    
+    public function routeNotificationForFcm($notification = null)
+    {
+        return $this->devices->pluck('token')->toArray();
     }
 }

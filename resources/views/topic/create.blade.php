@@ -1,9 +1,7 @@
-@extends('layouts.master')
+<x-main-layout title="{{__('Create Topic')}}">
 
-@section('title' , 'create')
-@section('content')
 
-<div class="container p-5">
+<div class="container pt-5">
     <h1>{{__('Create Topic')}}</h1>
     <form action="{{ route('topics.store' , $classroom->id) }}" method="post">
 
@@ -30,4 +28,4 @@
     </form>
 </div>
 
-@endsection
+</x-main-layout>

@@ -17,7 +17,6 @@
             @include('classworks._form' ,[
                 'button' => 'Create '])
             
-
         </form>
 
     </div>

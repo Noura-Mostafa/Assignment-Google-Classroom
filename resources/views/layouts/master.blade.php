@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title' , config('app.name'))</title>
+    <link rel="icon" type="image/x-icon" href="{{asset('imgs/Google_Classroom_Logo.svg.png')}}" />
     @if (App::currentLocale() == 'ar')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.rtl.min.css" integrity="sha384-PRrgQVJ8NNHGieOA1grGdCTIt4h21CzJs6SnWH4YMQ6G5F5+IEzOHz67L4SQaF0o" crossorigin="anonymous">
     @else
@@ -85,14 +86,16 @@
     </main>
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script>
-        var classroomId ;
-        const userId = "{{Auth::id()}}" ;
+        var classroomId;
+        const userId = "{{Auth::id()}}";
     </script>
 
     @stack('scripts')
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js' , 'resources/js/fcm.js'])
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

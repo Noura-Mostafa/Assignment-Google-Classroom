@@ -1,9 +1,7 @@
-@extends('layouts.master')
+<x-main-layout title="{{__('Trashed Topic')}}">
 
-@section('title' , ' Restored Topics')
-@section('content')
 
-<div class="container p-5">
+<div class="container pt-5">
   <h1> RestoredTopics</h1>
   <div class="row mt-4">
     @foreach($topics as $topic)
@@ -36,4 +34,4 @@
   </div>
 </div>
 
-@endsection
+</x-main-layout>

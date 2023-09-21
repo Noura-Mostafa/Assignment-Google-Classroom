@@ -82,7 +82,7 @@ import './bootstrap';
     })
     .listen('.new-message' , function (event) {
             addMessage(event)
-    });
+    })
     .listenForWhisper('start-typing' , (event) => {
         $('#whisper').html(`${event.name} is typing ..`)
         console.log(event , 'start typing')

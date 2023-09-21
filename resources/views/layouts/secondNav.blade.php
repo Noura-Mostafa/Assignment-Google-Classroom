@@ -34,13 +34,11 @@
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-md bg-body-tertiary">
+        <nav class="navbar navbar-expand-md">
             <div class="container">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="navbar-brand text-secondary fs-4" href="{{route('classrooms.index')}}">
-                            <img src="{{asset('imgs/googlelogo_clr_74x24px.svg')}}" alt="Logo" class="d-inline-block align-text-center">
-                            Classroom</a>
+                        <a class="navbar-brand text-secondary fs-4" href="{{route('classrooms.index')}}">Google <span class="text-success">Classroom</span></a>
                     </li>
                 </ul>
 
@@ -49,7 +47,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mb-2 mb-lg-0">
+                    <ul class="navbar-nav m-auto mb-2 mb-lg-0">
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('classrooms.show' , $classroom->id)}}">{{__('Stream')}}</a>
@@ -64,30 +62,19 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link" href="{{route('classrooms.chat' , $classroom->id)}}">{{__('Chat')}}</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" href="#">{{__('Grade')}}</a>
                         </li>
                     </ul>
 
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-                                </svg>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('classrooms.create')}}">{{__('Create Class')}}</a></li>
-                                <li><a class="dropdown-item" href="{{route('classrooms.trashed')}}">{{__('Trashed')}}</a></li>
-                                <li><a class="dropdown-item" href="{{route('profiles.create')}}">{{__('Profile')}}</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('dashboard')}}">{{ Auth::user()->name }}</a>
-                        </li>
-
+                    <ul class="navbar-nav mb-2 mb-lg-0">
                         <x-user-notification-menu />
-
+                        <li class="nav-item">
+                            <img src="https://ui-avatars.com/api/?name={{Auth::user()?->name}}&size=35" class="rounded-circle me-2 mt-1" alt="">
+                        </li>
                     </ul>
 
                 </div>
@@ -97,11 +84,12 @@
 
     </header>
 
-    <main>
+    <main class="bg-white">
         @yield('content')
     </main>
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script>
         var classroomId;
@@ -109,7 +97,7 @@
     </script>
 
     @stack('scripts')
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js' , 'resources/js/fcm.js'])
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

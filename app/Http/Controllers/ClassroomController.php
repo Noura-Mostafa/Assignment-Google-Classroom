@@ -105,22 +105,23 @@ class ClassroomController extends Controller
             ]);
     }
 
-    public function edit($id): BaseView
+    public function edit(Classroom $classroom): BaseView
     {
-        $classroom = Classroom::find($id);
+        $this->authorize('update' , [$classroom]);
+
         if (!$classroom) {
             abort(404);
         }
         return view()->make('classroom.edit')->with([
-            'id' => $id,
             'classroom' => $classroom,
         ]);
     }
 
 
-    public function update(ClassroomRequest $request, $id)
+    public function update(ClassroomRequest $request, Classroom $classroom)
     {
-        $classroom = Classroom::findOrFail($id);
+        $this->authorize('update' , [$classroom]);
+
         $validated = $request->validated();
 
         $classroom->name = $request->post('name');
@@ -146,9 +147,10 @@ class ClassroomController extends Controller
         return Redirect::route('classrooms.index');
     }
 
-    public function destroy($id)
+    public function destroy(Classroom $classroom)
     {
-        $classroom = Classroom::find($id);
+        $this->authorize('delete' , [$classroom]);
+
         $classroom->delete();
 
         return Redirect::route('classrooms.index')->with('success', 'Classroom has been trashed');

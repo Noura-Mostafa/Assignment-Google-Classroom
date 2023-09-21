@@ -1,4 +1,5 @@
 <x-main-layout title="Join Classroom">
+    
     <div class="d-flex justify-content-center align-items-center vh-100">
         <div class="border rounded p-5 text-center">
             <img src="{{asset('/imgs/Google_Classroom_Logo.svg.png')}}" class="img-fluid" height="100" width="100" alt="">

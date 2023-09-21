@@ -1,8 +1,7 @@
-@extends('layouts.master')
+<x-main-layout title="{{__('Topics')}}">
 
-@section('title' , 'topics')
-@section('content')
-<div class="container p-5">
+
+<div class="container pt-5">
 <div class="container d-flex justify-content-between">
     <h1 class="mb-4">Topics</h1>
     <a class="text-secondary text-decoration-none fs-5" href="{{route('topics.trashed')}}">Trashed</a>
@@ -31,4 +30,4 @@
   </div>
 </div>
 
-@endsection
+</x-main-layout>

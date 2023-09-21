@@ -3,11 +3,11 @@
         @if ($unreadCount)
        <span class="badge bg-success">{{$unreadCount}}</span>
         @endif 
-        Notifications
+        <i class="fas fa-bell"></i>
     </a>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu p-3 text-sm">
         @forelse($notifications as $notification)
-        <li class="p-2">
+        <li>
             <a class="dropdown-item" href="{{$notification->data['link']}}?nid={{$notification->id}}">
             @if ($notification->unread()) <b>*</b>
             @endif           
@@ -17,9 +17,9 @@
         </a>
    
     @empty
-    <p class="text-success text-center">No Notifications</p>
+    <small class="text-muted text-center">No Notifications</small>
     @endforelse
-    <a href="{{route('notifications')}}" class="text-success">{{__('see all notifications')}}</a>
+    <a href="{{route('notifications')}}" class="text-center text-muted text-sm">{{__('see all')}}</a>
     </li>
     </ul>
 </li>

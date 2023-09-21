@@ -21,11 +21,10 @@ class ProfilesController extends Controller
         ]);
     }
     
-    public function create(User $user): View
+    
+    public function create(User $user , Profile $profile): View
     {
-        return view('profiles.create' , [
-            'user' => $user,
-        ]);
+        return view('profiles.create' , compact('user' , 'profile'));
     }
 
     
@@ -37,7 +36,6 @@ class ProfilesController extends Controller
             'last_name' => ['nullable', 'string'],
             'user_id' => ['int', 'exists:users,id'],
             'locale' => ['nullable'],
-            'country' => ['nullable' , 'string'],
             'timezone' => ['nullable'],
         ]);
 
@@ -46,6 +44,7 @@ class ProfilesController extends Controller
 
         return Redirect::route('classrooms.index');
     }
+
 
     public function edit(Profile $profile): View
     {
@@ -60,8 +59,6 @@ class ProfilesController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['nullable', 'string'],
             'user_id' => ['int', 'exists:users,id'],
-            'locale' => ['nullable'],
-            'country' => ['nullable' , 'string'],
             'timezone' => ['nullable'],
         ]);
 

@@ -9,12 +9,29 @@
 
         <div class="col-lg-3  p-5">
             <div>
+            @can('create' , ['App\Models\Topic'])
                 <a href="{{route('topics.create' , $classroom->id)}}" class="btn btn-outline-success rounded-pill mb-4">{{__('Create Topic')}}</a>
 
                 <h5 class="text-success">{{__('All topics')}}</h5>
                 @foreach ($classroom->topics as $topic)
                 <h6>{{__($topic->name)}}</h6>
                 @endforeach
+            
+            @else 
+            <div class="border rounded p-3">
+                <h6 class="text-success fw-bold">Dear Student , {{Auth::user()->name}}</h6>
+                <p class="text-muted">
+                    Keep attention to your classworks
+                </p>
+            </div>
+            <div class="border rounded p-3 mt-4">
+                <h6 class="text-success fw-bold">Existing Topic</h6>
+                @foreach ($classroom->topics as $topic)
+                <h6>{{__($topic->name)}}</h6>
+                @endforeach
+            </div>
+            @endcan
+
             </div>
         </div>
 
@@ -41,7 +58,7 @@
 
             <form action="{{ URL::current() }}" method="get" class="d-flex mb-3 justify-content-end">
                 <input type="text" placeholder="{{__('Search')}}" name="search" class="form-control w-25 me-1">
-                <button class="btn btn-dark" type="submit">{{__('Search')}}</button>
+                <button class="btn btn-outline-success" type="submit">{{__('Search')}}</button>
             </form>
 
             @forelse($classworks as $group)
@@ -58,10 +75,15 @@
                     </h2>
                     <div id="flush-collapse{{$classwork->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body text-secondary">
+
                         <div class="row">
                                 <div class="col-md-6">
                                 <h6>{!! $classwork->description !!}</h6>
+                                <a href="{{route('classrooms.classworks.show' , [$classroom->id , $classwork->id])}}" class="text-success ps-3">
+                                view instruction
+                                </a>
                                 </div>
+                                @can('update' , [$classwork])
                                 <div class="col-md-6 row">
                                     <div class="col-md-4">
                                         {{ $classwork->assigned_count }}
@@ -81,24 +103,25 @@
                             </div>
                             <div class="actions d-flex mt-3">
                                 <a href="{{route('classrooms.classworks.show' , [$classroom->id , $classwork->id])}}" class="btn rounded-pill btn-sm btn-outline-success me-1">
-                                    {{__('View')}}
+                                <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{route('classrooms.classworks.edit' , [$classroom->id , $classwork->id])}}" class="rounded-pill btn btn-sm btn-outline-dark me-1">
+                                <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 <form action="{{route('classrooms.classworks.destroy',[$classroom->id , $classwork->id])}}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-outline-danger rounded-pill btn-sm me-1" type="submit">{{__('Delete')}}</button>
+                                    <button class="btn btn-outline-danger rounded-pill btn-sm" type="submit"><i class="fas fa-trash"></i></button>
                                 </form>
-                                <a href="{{route('classrooms.classworks.edit' , [$classroom->id , $classwork->id])}}" class="rounded-pill btn btn-sm btn-outline-dark">
-                                    {{__('Edit')}}
-                                </a>
                             </div>
                         </div>
+                        @endcan
                     </div>
                 </div>
                 @endforeach
             </div>
             @empty
-            <p class="text-center fs-4 text-success">{{__('No Classworks Found.')}}</p>
+            <small class="text-success">{{__('No Classworks Found.')}}</small>
             @endforelse
         </div>
 
