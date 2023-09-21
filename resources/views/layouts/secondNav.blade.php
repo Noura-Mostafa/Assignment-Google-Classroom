@@ -70,10 +70,28 @@
                         </li>
                     </ul>
 
-                    <ul class="navbar-nav mb-2 mb-lg-0">
-                        <x-user-notification-menu />
-                        <li class="nav-item">
-                            <img src="https://ui-avatars.com/api/?name={{Auth::user()?->name}}&size=35" class="rounded-circle me-2 mt-1" alt="">
+
+                    <ul class="navbar-nav mb-2 mb-lg-0">                     
+                        
+                    <x-user-notification-menu />
+
+                      
+                    <li class="nav-item dropdown fs-6">
+                            <a class="nav-link fs-6 dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://ui-avatars.com/api/?name={{Auth::user()?->name}}&size=30" class="rounded-circle" alt="">
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item  d-flex align-items-center">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+
+                                        <x-dropdown-link class="text-dark text-decoration-none" :href="route('logout')" onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                            {{ __('Log Out') }}
+                                        </x-dropdown-link>
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
 
@@ -84,7 +102,7 @@
 
     </header>
 
-    <main class="bg-white">
+    <main>
         @yield('content')
     </main>
 
