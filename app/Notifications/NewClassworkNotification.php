@@ -37,7 +37,7 @@ class NewClassworkNotification extends Notification implements ShouldQueue
     public function via(object $notifiable): array
     {
         $via = ['database',
-        FcmChannel::class
+        //FcmChannel::class
          //'mail',
          //'broadcast' ,
          // 'vonage',

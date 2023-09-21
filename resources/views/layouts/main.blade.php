@@ -38,7 +38,7 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-plus"></i>
+                                <i class="fas fa-plus"></i>
                             </a>
                             <ul class="dropdown-menu p-2 fs-6">
                                 <li><a class="dropdown-item" href="{{route('classrooms.create')}}">{{__('Create Class')}}</a></li>
@@ -47,10 +47,11 @@
                             </ul>
                         </li>
 
+                        <x-user-notification-menu />
 
                         <li class="nav-item dropdown fs-6">
                             <a class="nav-link fs-6 dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-globe"></i>
+                                <i class="fas fa-globe"></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <li> <a href="{{ route('change.language', ['locale' => 'en']) }}" class="nav-link">English</a>
@@ -61,11 +62,26 @@
 
                         </li>
 
-                        <x-user-notification-menu />
 
-                        <li class="nav-item">
-                            <img src="https://ui-avatars.com/api/?name={{Auth::user()?->name}}&size=35" class="rounded-circle me-2 mt-1" alt="">
+                        <li class="nav-item dropdown fs-6">
+                            <a class="nav-link fs-6 dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://ui-avatars.com/api/?name={{Auth::user()?->name}}&size=30" class="rounded-circle" alt="">
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item  d-flex align-items-center">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+
+                                        <x-dropdown-link class="text-dark text-decoration-none" :href="route('logout')" onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                            {{ __('Log Out') }}
+                                        </x-dropdown-link>
+                                    </form>
+                                </li>
+                            </ul>
+
                         </li>
+
                     </ul>
 
                 </div>
@@ -74,7 +90,7 @@
         </nav>
     </header>
 
-    <main >
+    <main>
         {{ $slot }}
     </main>
 
