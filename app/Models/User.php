@@ -74,11 +74,11 @@ class User extends Authenticatable implements HasLocalePreference
     {
         return $this->hasMany(Classroom::class, 'user_id');
     }
-    
+
     public function classworks()
     {
-        return $this->belongsToMany(Classwork::class)->withPivot(['grade' , 'status' , 'submitted_at' , 'created_at'])
-               ->using(ClassworkUser::class);
+        return $this->belongsToMany(Classwork::class)->withPivot(['grade', 'status', 'submitted_at', 'created_at'])
+            ->using(ClassworkUser::class);
     }
 
     public function comments(): HasMany
@@ -93,12 +93,12 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function receivedMessages()
     {
-        return $this->morphMany(Message::class , 'recipient');
+        return $this->morphMany(Message::class, 'recipient');
     }
 
     public function sentMessages()
     {
-        return $this->hasMany(Message::class , 'sender_id');
+        return $this->hasMany(Message::class, 'sender_id');
     }
 
     public function submissions()
@@ -108,20 +108,22 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function devices()
     {
-        return $this->morphMany(DeviceToken::class , 'tokenable') ;
+        return $this->morphMany(DeviceToken::class, 'tokenable');
     }
 
     public function profile()
     {
         return $this->hasOne(Profile::class, 'user_id', 'id')
-            ->withDefault();
+            ->withDefault([
+                'user_id', 'first_name', 'last_name', 'gender', 'birthday', 'locale', 'timezone'
+            ]);
     }
-    
+
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);
     }
-    
+
     public function routeNotificationForEmail($notification = null)
     {
         return $this->email;
@@ -147,7 +149,7 @@ class User extends Authenticatable implements HasLocalePreference
         return '972595718157';
     }
 
-    
+
     public function routeNotificationForFcm($notification = null)
     {
         return $this->devices->pluck('token')->toArray();

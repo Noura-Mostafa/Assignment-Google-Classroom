@@ -7,7 +7,7 @@
         <x-alert name="error" class="alert-danger" />
 
 
-        <form action="{{route('profiles.store')}}" method="post" class="w-75 m-auto">
+        <form action="{{route('profile.store')}}" method="post" class="w-75 m-auto">
             @csrf
 
 
@@ -62,7 +62,6 @@
         @else
         <div class="m-auto text-center">
             <h1 class="mb-3">{{__('Already profile Created')}}</h1>
-            <a href="{{route('profiles.index')}}" class="btn btn-success">Go To Your Profile</a>
         </div>
 
         @endif

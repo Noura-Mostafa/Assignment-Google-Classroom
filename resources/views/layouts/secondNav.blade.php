@@ -91,6 +91,7 @@
                                         </x-dropdown-link>
                                     </form>
                                 </li>
+                                <li> <a href="{{ route('profile.show') }}" class="nav-link d-flex align-items-center">Profile</a></li>
                             </ul>
                         </li>
                     </ul>

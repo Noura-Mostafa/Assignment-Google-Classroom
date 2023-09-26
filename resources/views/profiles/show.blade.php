@@ -16,7 +16,7 @@
     <h5 class="mb-2"><span class="btn btn-sm btn-success">{{__('Language :')}}</span> {{$profile->locale}}</h5>
     <h5 class="mb-2"><span class="btn btn-sm btn-success">{{__('Birthday :')}}</span> {{$profile->birthday->format('Y-m-d')}}</h5>
     <h5 class="mb-2"><span class="btn btn-sm btn-success">{{__('TimeZone :')}}</span> {{$profile->timezone}}</h5>
-    <a href="{{route('profiles.edit' , $profile->id)}}" class="btn btn-dark btn-sm mt-2">Edit Your profile</a>
+    <a href="{{route('profile.edit' , $profile->id)}}" class="btn btn-dark btn-sm mt-2">Edit Your profile</a>
     </div>
 
 

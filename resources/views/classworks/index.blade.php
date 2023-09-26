@@ -9,28 +9,28 @@
 
         <div class="col-lg-3  p-5">
             <div>
-            @can('create' , ['App\Models\Topic'])
+                @can('create' , ['App\Models\Topic'])
                 <a href="{{route('topics.create' , $classroom->id)}}" class="btn btn-outline-success rounded-pill mb-4">{{__('Create Topic')}}</a>
 
                 <h5 class="text-success">{{__('All topics')}}</h5>
                 @foreach ($classroom->topics as $topic)
                 <h6>{{__($topic->name)}}</h6>
                 @endforeach
-            
-            @else 
-            <div class="border rounded p-3">
-                <h6 class="text-success fw-bold">Dear Student , {{Auth::user()->name}}</h6>
-                <p class="text-muted">
-                    Keep attention to your classworks
-                </p>
-            </div>
-            <div class="border rounded p-3 mt-4">
-                <h6 class="text-success fw-bold">Existing Topic</h6>
-                @foreach ($classroom->topics as $topic)
-                <h6>{{__($topic->name)}}</h6>
-                @endforeach
-            </div>
-            @endcan
+
+                @else
+                <div class="border rounded p-3">
+                    <h6 class="text-success fw-bold">Dear Student , {{Auth::user()->name}}</h6>
+                    <p class="text-muted">
+                        Keep attention to your classworks
+                    </p>
+                </div>
+                <div class="border rounded p-3 mt-4">
+                    <h6 class="text-success fw-bold">Existing Topic</h6>
+                    @foreach ($classroom->topics as $topic)
+                    <h6>{{__($topic->name)}}</h6>
+                    @endforeach
+                </div>
+                @endcan
 
             </div>
         </div>
@@ -62,7 +62,7 @@
             </form>
 
             @forelse($classworks as $group)
-            <h3 class="mt-4 text-success">{{__($group->first()->topic->name)}}</h3>
+            <h3 class="mt-4 text-success">{{__($group->first()->topic->name ?? '')}}</h3>
             <hr class="text-success">
 
             <div class="accordion accordion-flush" id="accordionFlushxample">
@@ -76,12 +76,9 @@
                     <div id="flush-collapse{{$classwork->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body text-secondary">
 
-                        <div class="row">
+                            <div class="row">
                                 <div class="col-md-6">
-                                <h6>{!! $classwork->description !!}</h6>
-                                <a href="{{route('classrooms.classworks.show' , [$classroom->id , $classwork->id])}}" class="text-success ps-3">
-                                view instruction
-                                </a>
+                                    <h6>{!! $classwork->description !!}</h6>
                                 </div>
                                 @can('update' , [$classwork])
                                 <div class="col-md-6 row">
@@ -103,10 +100,10 @@
                             </div>
                             <div class="actions d-flex mt-3">
                                 <a href="{{route('classrooms.classworks.show' , [$classroom->id , $classwork->id])}}" class="btn rounded-pill btn-sm btn-outline-success me-1">
-                                <i class="fas fa-eye"></i>
+                                    <i class="fas fa-eye"></i>
                                 </a>
                                 <a href="{{route('classrooms.classworks.edit' , [$classroom->id , $classwork->id])}}" class="rounded-pill btn btn-sm btn-outline-dark me-1">
-                                <i class="fas fa-pencil-alt"></i>
+                                    <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 <form action="{{route('classrooms.classworks.destroy',[$classroom->id , $classwork->id])}}" method="post">
                                     @csrf
@@ -115,6 +112,10 @@
                                 </form>
                             </div>
                         </div>
+                        @else
+                        <a href="{{route('classrooms.classworks.show' , [$classroom->id , $classwork->id])}}" class="text-success ps-3">
+                            view instruction
+                        </a>
                         @endcan
                     </div>
                 </div>
@@ -131,7 +132,7 @@
 
 @push('scripts')
 <script>
-    var classroomId ;
+    var classroomId;
     classroomId = "{{$classwork->classroom_id}}";
 </script>
 @endpush

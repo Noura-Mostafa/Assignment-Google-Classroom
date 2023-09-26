@@ -4,7 +4,7 @@
 
         <x-alert name="success" class="alert-success" />
         <x-alert name="error" class="alert-danger" />
-        
+
         <div class="row">
             <div class="col-lg-9">
                 <div class="header d-flex">
@@ -13,7 +13,7 @@
                     </div>
                     <div class="content w-100">
                         <h2 class="text-success"> {{$classwork->title}}</h2>
-                        <p class="text-secondary">{{auth()->user()->name}} . {{$classwork->published_at}}</p>
+                        <p class="text-secondary">{{$classwork->user->name}} . {{$classwork->published_at}}</p>
                         <hr class="text-success">
                         <p class="description">{!! $classwork->description !!}</p>
                         <hr class="text-success">
@@ -27,7 +27,16 @@
 
 
             <div class="col-lg-3">
-
+            <div class="shadow-sm p-3 rounded mb-2">
+                @can('submissions.show' , [$classwork])
+                <ul>
+                    @foreach($student_submissions as $submission)
+                    <li class="mb-1"><a href="{{route('submissions.file' , $submission->id)}}" class="btn btn-light">File #{{$loop->iteration}}</a></li>
+                    @endforeach
+                </ul>
+                @endcan
+            </div>
+            
                 <div class="shadow-sm p-3 rounded mb-2">
 
                     @if($submissions->count())
@@ -52,7 +61,7 @@
                         <button type="submit" class="btn btn-success w-100 mt-2">{{__('Submit')}}</button>
                     </form>
                     @endcan
-                    
+
                     @endif
                 </div>
 

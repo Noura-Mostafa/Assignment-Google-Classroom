@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View as BaseView;
 use App\Http\Requests\ClassroomRequest;
+use App\Models\Classwork;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -40,7 +41,7 @@ class ClassroomController extends Controller
             ->recent()
             ->orderBy('created_at', 'DESC')
             ->filter($request->query())
-            ->simplePaginate(4);
+            ->simplePaginate(3);
 
         return view('classroom.index', compact('classrooms', 'success'));
     }
@@ -85,7 +86,7 @@ class ClassroomController extends Controller
 
     public function show(int $id , Stream $stream)
     {
-
+        $profile = Auth::user()->profile;
         $stream = Stream::get();
         $classroom = Classroom::findOrFail($id);
         $topics = Topic::where('classroom_id', '=', $id)->get();
@@ -102,6 +103,7 @@ class ClassroomController extends Controller
                 'topics' => $topics,
                 'invitation_link' => $invitation_link,
                 'stream' => $stream,
+                'profile' => $profile,
             ]);
     }
 

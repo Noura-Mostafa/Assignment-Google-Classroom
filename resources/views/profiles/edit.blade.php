@@ -6,7 +6,7 @@
 
         <x-alert name="error" class="alert-danger"/>
         
-        <form action="{{route('profiles.update' , $profile->id)}}" method="post" class="w-75 m-auto">
+        <form action="{{route('profile.update' , $profile->id)}}" method="post" class="w-75 m-auto">
             @csrf
             @method('put')
 

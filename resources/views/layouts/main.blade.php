@@ -36,6 +36,8 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <x-user-notification-menu />
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-plus"></i>
@@ -43,11 +45,10 @@
                             <ul class="dropdown-menu p-2 fs-6">
                                 <li><a class="dropdown-item" href="{{route('classrooms.create')}}">{{__('Create Class')}}</a></li>
                                 <li><a class="dropdown-item" href="{{route('classrooms.trashed')}}">{{__('Trashed')}}</a></li>
-                                <li><a class="dropdown-item" href="{{route('profiles.create')}}">{{__('Profile')}}</a></li>
+                                <li><a class="dropdown-item" href="{{route('profile.create')}}">{{__('Profile')}}</a></li>
                             </ul>
                         </li>
 
-                        <x-user-notification-menu />
 
                         <li class="nav-item dropdown fs-6">
                             <a class="nav-link fs-6 dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

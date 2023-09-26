@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Redirect;
 class ProfilesController extends Controller
 {
 
-    public function index()
+    public function show(Profile $profile)
     {
         $profile = Auth::user()->profile;
-        return view('profiles.index' , [
+        return view('profiles.show' , [
             'profile' => $profile
         ]);
     }
@@ -24,7 +24,10 @@ class ProfilesController extends Controller
     
     public function create(User $user , Profile $profile): View
     {
-        return view('profiles.create' , compact('user' , 'profile'));
+        return view('profiles.create' , [
+            'profile' => $profile ,
+            'user' => $user
+        ]);
     }
 
     
@@ -65,7 +68,7 @@ class ProfilesController extends Controller
         $profile->update($request->all());
         
 
-        return Redirect::route('profiles.show' , $profile->id);
+        return Redirect::route('profile.show' , $profile->id);
     }
 
     public function destroy(Profile $profile)

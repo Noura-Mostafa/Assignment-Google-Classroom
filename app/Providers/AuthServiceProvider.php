@@ -90,5 +90,12 @@ class AuthServiceProvider extends ServiceProvider
                 ->wherePivot('classwork_id', '=', $classwork->id)
                 ->exists();
         });
+
+        Gate::define('submissions.show', function (User $user, Classwork $classwork) {
+            return $user->classrooms()
+                ->wherePivot('classroom_id', '=', $classwork->classroom_id)
+                ->wherePivot('role', '=', 'teacher')
+                ->exists();
+        });
     }
 }

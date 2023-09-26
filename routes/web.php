@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlansController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\GradingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PaymentsController;
@@ -130,7 +131,16 @@ Route::middleware(['auth:web,admin'])->group(function () {
        Route::get('submissions/{submission}/file',  [SubmissionController::class, 'file'])
               ->name('submissions.file');
 
-       Route::resource('profiles', ProfilesController::class)->except('show');
+       Route::get('/submissions/{classwork}', [GradingController::class , 'index'])->name('submissions.grade.index');
+
+       // Route::put('/submissions/grade', [GradingController::class , 'update'])->name('submissions.grade.update');
+
+       Route::get('profile/create', [ProfilesController::class, 'create'])->name('profile.create');
+       Route::get('profile', [ProfilesController::class, 'show'])->name('profile.show');
+       Route::post('profile', [ProfilesController::class, 'store'])->name('profile.store');
+       Route::get('profile/{profile}/edit', [ProfilesController::class, 'edit'])->name('profile.edit');
+       Route::put('profile/{profile}', [ProfilesController::class, 'update'])->name('profile.update');
+       Route::delete('profile/{profile}', [ProfilesController::class, 'destroy'])->name('profile.destroy');
 
        Route::get('notifications', [NotificationsController::class, 'index'])->name('notifications');
 

@@ -5,13 +5,13 @@
         @endif 
         <i class="fas fa-bell"></i>
     </a>
-    <ul class="dropdown-menu p-3 text-sm">
+    <ul class="dropdown-menu p-1">
         @forelse($notifications as $notification)
         <li>
             <a class="dropdown-item" href="{{$notification->data['link']}}?nid={{$notification->id}}">
-            @if ($notification->unread()) <b>*</b>
-            @endif           
-            {{$notification->data['body']}}
+            @if ($notification->unread()) <b>*</b>@endif           
+
+            <small>{{$notification->data['body']}}</small>
             <br>
             <small class="text-muted">{{$notification->created_at->diffForHumans()}}</small>
         </a>
